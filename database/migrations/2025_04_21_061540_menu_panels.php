@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('menu_panels', function (Blueprint $table) {
             $table->id()->comment('شناسه یکتا پنل منو');
+            $table->string('lable')->comment('عنوان فارسی پنل منو');
             $table->string('title')->comment('عنوان پنل منو');
             $table->string('slug')->comment('آدرس منو یا شناسه منو');
             $table->string('icon')->nullable()->comment('آیکون پنل منو');

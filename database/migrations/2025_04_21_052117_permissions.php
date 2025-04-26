@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->id()->comment('شناسه یکتا سطح دسترسی');
             $table->string('title')->comment('عنوان سطح دسترسی (نمایش در UI)');
+            $table->string('label')->comment('عنوان سطح دسترسی (نمایش در UI)');
             $table->string('slug')->comment('نام یکتا سطح دسترسی برای استفاده در کد (مثلاً view-users)');
             $table->integer('menu_panel_id')->nullable()->comment('شناسه منوی اصلی که این دسترسی به آن مربوط می‌شود');
             $table->integer('submenu_panel_id')->nullable()->comment('شناسه زیرمنو (در صورت وجود)');

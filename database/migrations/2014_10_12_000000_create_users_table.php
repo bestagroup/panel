@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,7 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable()->comment('آدرس ایمیل');
             $table->boolean('email_verify')->default(0)->comment('تایید ایمیل (0=تایید نشده، 1=تایید شده)');
             $table->timestamp('email_verified_at')->nullable()->comment('تاریخ و زمان تایید ایمیل');
-            $table->string('level', 20)->default('site')->comment('سطح دسترسی کاربر مانند site یا admin');
+            $table->string('level', 20)->default('site')->comment('سطح دسترسی کاربر مانند site یا panel');
             $table->string('api_token')->nullable()->comment('توکن API برای دسترسی از طریق کلاینت‌ها');
             $table->string('password')->nullable()->comment('رمز عبور هش شده');
             $table->string('image')->nullable()->comment('آدرس تصویر پروفایل');
@@ -28,9 +30,9 @@ return new class extends Migration
             $table->string('national_id', 10)->nullable()->comment('کد ملی کاربر');
             $table->string('user_job', 191)->nullable()->comment('عنوان شغلی کاربر');
             $table->string('marital_status', 191)->nullable()->comment('وضعیت تاهل کاربر');
-            $table->unsignedBigInteger('type_id')->comment('شناسه نوع کاربر');
-            $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('type_id')->nullable()->comment('شناسه نوع کاربر');
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->foreign('type_id')->references('id')->on('type_users')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
@@ -55,6 +57,14 @@ return new class extends Migration
             $table->timestamps(); // created_at و updated_at
         });
 
+        $user = User::create([
+            'name'      => 'محمد حسین دیوان بیگی',
+            'username'  => 'hosseindbk',
+            'level'     => 'admin',
+            'type_id'   => '1',
+            'email'     => 'hosseindbk@gmail.com',
+            'password'  => Hash::make('1123581320'),
+        ]);
     }
     /**
      * Reverse the migrations.

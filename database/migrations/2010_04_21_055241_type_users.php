@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TypeUser;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,11 @@ return new class extends Migration
             $table->string('title_fa')->nullable()->comment('عنوان نوع کاربر به فارسی یا نمایش در UI');
             $table->timestamps();
         });
+
+        $user = TypeUser::create([
+            'title'      => 'superadmin',
+            'title_fa'   => 'کاربر اصلی',
+        ]);
     }
 
     /**

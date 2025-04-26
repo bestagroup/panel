@@ -5,7 +5,7 @@
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
           ">
     <div class="app-brand demo py-3">
-        <a class="app-brand-link" href="index.html">
+        <a class="app-brand-link" href="{{Route('dashboard')}}">
 <span class="app-brand-logo demo">
 <span style="color: var(--bs-primary)">
 <svg fill="none" height="150" viewbox="0 0 38 20" width="268" xmlns="http://www.w3.org/2000/svg">
@@ -59,44 +59,58 @@
     <ul class="menu-inner py-1">
 
         <!-- داشبورد -->
-        <li class="menu-item {{ Route::is('admin.brand_management') ? 'active open' : '' }}">
+        <li class="menu-item {{ Route::is('panel.brand_management') ? 'active open' : '' }}">
             <a class="menu-link menu-toggle" href="javascript:void(0);">
                 <i class="menu-icon tf-icons mdi mdi-view-dashboard"></i>
                 <div>مدیریت داشبورد</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ Route::is('admin.brand_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.brand_management') }}">
+                <li class="menu-item {{ Route::is('owner') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('owner') }}">
                         <div>مدیریت برند</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('menupanelmanagement') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('menupanelmanagement.index') }}">
+                        <div>مدیریت منو داشبورد</div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('submenupanelmanagement') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('submenupanelmanagement.index') }}">
+                        <div>مدیریت زیر منو داشبورد</div>
                     </a>
                 </li>
             </ul>
         </li>
 
         <!-- مدیریت کاربران -->
-        <li class="menu-item {{ Route::is('admin.profile_view') || Route::is('admin.site_users') || Route::is('admin.notifications_management') || Route::is('admin.payments_management') ? 'active open' : '' }}">
+        <li class="menu-item {{ Route::is('panel.profile_view') || Route::is('panel.site_users') || Route::is('panel.notifications_management') || Route::is('panel.payments_management') ? 'active open' : '' }}">
             <a class="menu-link menu-toggle" href="javascript:void(0);">
                 <i class="menu-icon tf-icons mdi mdi-account-group"></i>
                 <div>مدیریت کاربران</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ Route::is('admin.profile_view') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.profile_view') }}">
+                <li class="menu-item {{ Route::is('panel.profile_view') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.profile_view') }}">
                         <div>نمایش پروفایل</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.site_users') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.site_users') }}">
+                <li class="menu-item {{ Route::is('panel.site_users') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.site_users') }}">
                         <div>کاربران سایت</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.notifications_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.notifications_management') }}">
+                <li class="menu-item {{ Route::is('panel.notifications_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.notifications_management') }}">
                         <div>مدیریت اعلانات</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.payments_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.payments_management') }}">
+                <li class="menu-item {{ Route::is('panel.payments_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.payments_management') }}">
                         <div>مدیریت پرداخت ها</div>
                     </a>
                 </li>
@@ -104,84 +118,84 @@
         </li>
 
         <!-- مدیریت وبسایت -->
-        <li class="menu-item {{ Route::is('admin.*') && !Route::is('admin.brand_management') && !Route::is('admin.profile_view') && !Route::is('admin.site_users') && !Route::is('admin.notifications_management') && !Route::is('admin.payments_management') ? 'active open' : '' }}">
+        <li class="menu-item {{ Route::is('panel.*') && !Route::is('panel.brand_management') && !Route::is('panel.profile_view') && !Route::is('panel.site_users') && !Route::is('panel.notifications_management') && !Route::is('panel.payments_management') ? 'active open' : '' }}">
             <a class="menu-link menu-toggle" href="javascript:void(0);">
                 <i class="menu-icon tf-icons mdi mdi-web"></i>
                 <div>مدیریت وبسایت</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ Route::is('admin.site_menu_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.site_menu_management') }}">
+                <li class="menu-item {{ Route::is('panel.site_menu_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.site_menu_management') }}">
                         <div>مدیریت منوی سایت</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.submenu_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.submenu_management') }}">
+                <li class="menu-item {{ Route::is('panel.submenu_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.submenu_management') }}">
                         <div>مدیریت زیرمنوی سایت</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.slides_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.slides_management') }}">
+                <li class="menu-item {{ Route::is('panel.slides_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.slides_management') }}">
                         <div>مدیریت اسلایدها</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.customers_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.customers_management') }}">
+                <li class="menu-item {{ Route::is('panel.customers_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.customers_management') }}">
                         <div>مدیریت مشتریان</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.news_events_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.news_events_management') }}">
+                <li class="menu-item {{ Route::is('panel.news_events_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.news_events_management') }}">
                         <div>مدیریت اخبار و رویدادها</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.faq_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.faq_management') }}">
+                <li class="menu-item {{ Route::is('panel.faq_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.faq_management') }}">
                         <div>مدیریت سوالات متداول</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.employees_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.employees_management') }}">
+                <li class="menu-item {{ Route::is('panel.employees_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.employees_management') }}">
                         <div>مدیریت کارمندان</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.consulting_requests') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.consulting_requests') }}">
+                <li class="menu-item {{ Route::is('panel.consulting_requests') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.consulting_requests') }}">
                         <div>مدیریت درخواست های مشاوره</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.inquiries_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.inquiries_management') }}">
+                <li class="menu-item {{ Route::is('panel.inquiries_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.inquiries_management') }}">
                         <div>مدیریت استعلامات</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.inquiry_fields') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.inquiry_fields') }}">
+                <li class="menu-item {{ Route::is('panel.inquiry_fields') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.inquiry_fields') }}">
                         <div>مدیریت فیلدهای استعلامات</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.posts_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.posts_management') }}">
+                <li class="menu-item {{ Route::is('panel.posts_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.posts_management') }}">
                         <div>مدیریت پست ها</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.educational_files') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.educational_files') }}">
+                <li class="menu-item {{ Route::is('panel.educational_files') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.educational_files') }}">
                         <div>مدیریت فایل های آموزشی</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.courses_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.courses_management') }}">
+                <li class="menu-item {{ Route::is('panel.courses_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.courses_management') }}">
                         <div>مدیریت دوره های آموزشی</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.media_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.media_management') }}">
+                <li class="menu-item {{ Route::is('panel.media_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.media_management') }}">
                         <div>مدیریت مدیا</div>
                     </a>
                 </li>
-                <li class="menu-item {{ Route::is('admin.discounts_management') ? 'active' : '' }}">
-                    <a class="menu-link" href="{{ route('admin.discounts_management') }}">
+                <li class="menu-item {{ Route::is('panel.discounts_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.discounts_management') }}">
                         <div>مدیریت تخفیفات</div>
                     </a>
                 </li>

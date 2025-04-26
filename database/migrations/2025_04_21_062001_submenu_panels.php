@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('submenu_panels', function (Blueprint $table) {
             $table->id()->comment('شناسه یکتا پنل زیرمنو');
             $table->string('title')->comment('عنوان زیرمنو');
+            $table->string('lable')->comment('عنوان فارسی پنل منو');
             $table->foreignId('menu_id')->constrained('menu_panels')->onDelete('cascade')->comment('شناسه منو اصلی که این زیرمنو به آن تعلق دارد');
             $table->string('slug')->comment('آدرس زیرمنو یا شناسه منو');
             $table->string('level')->nullable()->comment('سطح نمایش');
