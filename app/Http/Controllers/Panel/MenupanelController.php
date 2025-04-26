@@ -129,7 +129,7 @@ class MenupanelController extends Controller
 
     public function update(Request $request)
     {
-dd($request->all());
+
         $menu_panel = MenuPanel::findOrfail($request->input('id'));
         $menu_panel->title        = $request->input('title');
         $menu_panel->label        = $request->input('label');
@@ -171,8 +171,42 @@ dd($request->all());
         return response()->json(['success'=>$success , 'subject' => $subject, 'flag' => $flag, 'message' => $message]);
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            $menu = MenuPanel::findOrfail($request->input('id'));
+            $result1 = $menu->delete();
+
+            $permission = Permission::whereMenu_panel_id($request->input('id'))->first();
+            $result2 = $permission->delete();
+
+
+            if ($result1 == true  && $result2 == true) {
+                $success = true;
+                $flag = 'success';
+                $subject = 'عملیات موفق';
+                $message = 'اطلاعات با موفقیت پاک شد';
+            }elseif($result1 == true  && $result2 != true) {
+                $success = false;
+                $flag    = 'error';
+                $subject = 'عملیات نا موفق';
+                $message = 'اطلاعات دسترسی ثبت نشد، لطفا مجددا تلاش نمایید';
+            }
+            elseif($result1 != true  && $result2 != true) {
+                $success = false;
+                $flag    = 'error';
+                $subject = 'عملیات نا موفق';
+                $message = 'اطلاعات منو ثبت نشد، لطفا مجددا تلاش نمایید';
+            }
+
+        } catch (Exception $e) {
+
+            $success = false;
+            $flag    = 'error';
+            $subject = 'خطا در ارتباط با سرور';
+            $message = 'اطلاعات پاک نشد،لطفا بعدا مجدد تلاش نمایید ';
+        }
+        return response()->json(['success'=>$success , 'subject' => $subject, 'flag' => $flag, 'message' => $message]);
     }
+
 }

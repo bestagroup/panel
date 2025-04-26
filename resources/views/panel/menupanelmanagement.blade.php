@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'مدیریت منوی سایت')
+@section('title', 'مدیریت منوی داشبورد')
 <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css') }}"/>
 @section('content')
     <div class="card">
@@ -32,8 +32,9 @@
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <!-- Delete Modal -->
+    @foreach($menupanels as $menupanel)
+    <div class="modal fade" id="deleteModal{{$menupanel->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center">
                 <div class="modal-header border-bottom-0">
@@ -45,12 +46,12 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-danger">حذف</button>
+                    <button type="button" class="btn btn-danger" id="deletesubmit_{{$menupanel->id}}" data-id="{{$menupanel->id}}">حذف</button>
                 </div>
             </div>
         </div>
     </div>
-
+    @endforeach
     <!-- Add Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -64,14 +65,14 @@
                         {{csrf_field()}}
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="mg-b-10">نام  منو داشبورد</p>
-                                <input type="text" name="title" id="title" data-required="1" placeholder="نام منو داشبورد را وارد کنید" class="form-control" />
+                                <p class="mg-b-10">نام  منو داشبورد فارسی</p>
+                                <input type="text" name="label" id="label" data-required="1" placeholder="نام منو داشبورد فارسی را وارد کنید" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <p class="mg-b-10">نام  منو داشبورد فارسی</p>
-                                <input type="text" name="label" id="label" data-required="1" placeholder="نام منو داشبورد فارسی را وارد کنید" class="form-control" />
+                                <p class="mg-b-10">نام  منو داشبورد</p>
+                                <input type="text" name="title" id="title" data-required="1" placeholder="نام منو داشبورد را وارد کنید" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -112,6 +113,7 @@
             </div>
         </div>
     </div>
+    <!-- Edit Modal -->
     @foreach($menupanels as $menupanel)
     <div class="modal fade" id="editModal{{$menupanel->id}}" tabindex="-1" aria-labelledby="editModalLabel{{$menupanel->id}}" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -123,23 +125,24 @@
                 <div class="modal-body">
                     <form action="{{route(request()->segment(2).'.update' , $menupanel->id)}}" method="POST">
                         {{csrf_field()}}
-                        <input type="hidden" name="menu_id" id="menu_id" value="{{$menupanel->id}}" />
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p class="mg-b-10">نام  منو داشبورد</p>
-                                <input type="text" name="title" id="title" value="{{$menupanel->title}}" class="form-control" />
-                            </div>
-                        </div>
+                        <input type="hidden" name="menu_id" id="menu_id_{{$menupanel->id}}" value="{{$menupanel->id}}" />
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="mg-b-10">نام  منو داشبورد فارسی</p>
-                                <input type="text" name="label" id="label" value="{{$menupanel->label}}" class="form-control" />
+                                <input type="text" name="label" id="label_{{$menupanel->id}}" value="{{$menupanel->label}}" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
+                                <p class="mg-b-10">نام  منو داشبورد</p>
+                                <input type="text" name="title" id="title_{{$menupanel->id}}" value="{{$menupanel->title}}" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
                                 <p class="mg-b-10">زیر  منو داشبورد</p>
-                                <select name="submenu" id="submenu" class="form-control">
+                                <select name="submenu" id="submenu_{{$menupanel->id}}" class="form-control">
                                     <option value="1" selected>دارد</option>
                                     <option value="0">ندارد</option>
                                 </select>
@@ -148,26 +151,26 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="mg-b-10">کلاس داشبورد</p>
-                                <input type="text" name="class" id="class" value="{{$menupanel->class}}"  class="form-control" />
+                                <input type="text" name="class" id="class_{{$menupanel->id}}" value="{{$menupanel->class}}"  class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="mg-b-10">کنترلر داشبورد</p>
-                                <input type="text" name="controller" id="controller"  value="{{$menupanel->controller}}" class="form-control" />
+                                <input type="text" name="controller" id="controller_{{$menupanel->id}}"  value="{{$menupanel->controller}}" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <p class="mg-b-10">نمایش/عدم نمایش</p>
-                                <select name="status" id="status" class="form-control">
+                                <select name="status" id="status_{{$menupanel->id}}" class="form-control">
                                     <option value="4" >نمایش</option>
                                     <option value="0" >عدم نمایش</option>
                                 </select>
                             </div>
                         </div>
                         <div class="text-end">
-                            <button type="button" id="editsubmit{{$menupanel->id}}" class="btn btn-primary">ذخیره اطلاعات</button>
+                            <button type="button" id="editsubmit_{{$menupanel->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
                         </div>
                     </form>
                 </div>
@@ -236,28 +239,58 @@
     </script>
     <script>
         jQuery(document).ready(function(){
-            jQuery('#editsubmit{{$menupanel->id}}').click(function(e){
+            jQuery('[id^=editsubmit_]').click(function(e){
                 e.preventDefault();
+                var id = jQuery(this).attr('id').split('_')[1];
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
                 jQuery.ajax({
-                    url: "{{ route(request()->segment(2).'.update' , 2) }}",
+                    url: "{{ route(request()->segment(2).'.update' , 0) }}",
                     method: 'PATCH',
                     data: {
                         "_token"        : "{{ csrf_token() }}",
-                        id              : jQuery('#menu_id').val(),
-                        title           : jQuery('#title').val(),
-                        label           : jQuery('#label').val(),
-                        class           : jQuery('#class').val(),
-                        controller      : jQuery('#controller').val(),
-                        submenu         : jQuery('#submenu').val(),
-                        status          : jQuery('#status').val()
+                        id              : jQuery('#menu_id_' + id).val(),
+                        title           : jQuery('#title_' + id).val(),
+                        label           : jQuery('#label_' + id).val(),
+                        class           : jQuery('#class_' + id).val(),
+                        controller      : jQuery('#controller_' + id).val(),
+                        submenu         : jQuery('#submenu_' + id).val(),
+                        status          : jQuery('#status_' + id).val()
                     },
                     success: function (data) {
                         swal(data.subject, data.message, data.flag);
+                    },
+                    error: function (data) {
+                        swal(data.subject, data.message, data.flag);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function(){
+            jQuery('[id^=deletesubmit_]').click(function(e){
+                e.preventDefault();
+                var id = jQuery(this).attr('id').split('_')[1];
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                jQuery.ajax({
+                    url: "{{ route(request()->segment(2).'.destroy' , 0) }}",
+                    method: 'delete',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id   : jQuery(this).data("id"),
+
+                    },
+                    success: function (data) {
+                        swal(data.subject, data.message, data.flag);
+                        $('.yajra-datatable').DataTable().ajax.reload(null, false);
                     },
                     error: function (data) {
                         swal(data.subject, data.message, data.flag);
