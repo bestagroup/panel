@@ -202,4 +202,19 @@
             </ul>
         </li>
 
+
+        <!-- مدیریت فایل ها -->
+        <li class="menu-item {{ Route::is('panel.file_manager') ? 'active open' : '' }}">
+            <a class="menu-link menu-toggle" href="javascript:void(0);">
+                <i class="menu-icon tf-icons mdi mdi-folder-multiple-outline"></i>
+                <div>مدیریت فایل‌ها</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('panel.file_management') ? 'active' : '' }}">
+                    <a class="menu-link" href="{{ route('panel.file_management') }}">
+                        <div>لیست فایل‌ها</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul></aside>

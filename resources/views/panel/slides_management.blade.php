@@ -160,10 +160,10 @@
                         addRemoveLinks: false,
                         previewTemplate: `
               <div class="dz-preview dz-file-preview card border mb-2 p-2 text-center" style="width: 140px">
-                <img data-dz-thumbnail class="img-fluid rounded mb-2" style="max-height: 100px; object-fit: cover;" />
+                <img data-dz-thumbnail class="img-fluid rounded mb-2" style="max-height: 100px; object-fit: cover;"  alt="" src=""/>
                 <div class="text-truncate small" data-dz-name></div>
                 <div class="text-muted small" data-dz-size></div>
-                <a class="btn btn-sm text-danger mt-1" data-dz-remove>حذف فایل</a>
+                <a class="text-danger mt-1" data-dz-remove>حذف فایل</a>
               </div>
             `
                     });

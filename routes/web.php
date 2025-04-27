@@ -59,5 +59,6 @@ Route::view('/panel/educational-files'          , 'panel.educational_files')    
 Route::view('/panel/courses-management'         , 'panel.courses_management')       ->name('panel.courses_management');
 Route::view('/panel/media-management'           , 'panel.media_management')         ->name('panel.media_management');
 Route::view('/panel/discounts-management'       , 'panel.discounts_management')     ->name('panel.discounts_management');
+Route::view('/panel/file-management'            , 'panel.file_management')          ->name('panel.file_management');
 
 

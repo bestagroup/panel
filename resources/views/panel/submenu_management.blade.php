@@ -129,7 +129,7 @@
                             <div class="card-body">
 
                                 <label class="form-label">تصویر</label>
-                                <div class="dropzone" id="submenuImageUpload">
+                                <div class="dropzone" id="submenuImageUpload" style="border: 1px dashed">
                                     <div class="dz-message needsclick">
                                         فایل را اینجا رها کنید یا کلیک کنید برای انتخاب
                                         <span class="note needsclick">(فرمت‌های مجاز: jpg, png, gif)</span>
