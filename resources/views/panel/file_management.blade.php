@@ -26,15 +26,15 @@
                     <tr>
                         <td>۱</td>
                         <td>
-                            <a href="javascript:void(0);" onclick="previewFile('assets/uploads/sample.jpg', 'image')">
-                                <img src="{{ asset('assets/uploads/sample.jpg') }}" alt="file" style="width: 40px;">
+                            <a href="javascript:void(0);" onclick="previewFile('assets/img/elements/1.jpg', 'image')">
+                                <img src="{{ asset('assets/img/elements/1.jpg') }}" alt="file" style="width: 40px;" class="rounded">
                             </a>
                         </td>
                         <td>نمونه-فایل.jpg</td>
                         <td>تصویر</td>
                         <td>۱۴۰۳/۰۲/۱۰</td>
                         <td>
-                            <a href="{{ asset('assets/uploads/sample.jpg') }}" download class="btn btn-sm btn-icon btn-outline-info"><i class="mdi mdi-download-outline"></i></a>
+                            <a href="{{ asset('assets/img/elements/1.jpg') }}" download class="btn btn-sm btn-icon btn-outline-info"><i class="mdi mdi-download-outline"></i></a>
                             <button class="btn btn-sm btn-icon btn-outline-danger" onclick="confirmDelete()"><i class="mdi mdi-delete-outline"></i></button>
                         </td>
                     </tr>

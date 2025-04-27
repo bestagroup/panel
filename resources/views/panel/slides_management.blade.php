@@ -25,7 +25,7 @@
                     <tbody>
                     <tr>
                         <td>۱</td>
-                        <td><img src="{{ asset('assets/img/slide-demo.jpg') }}" alt="demo" class="img-thumbnail" style="max-width: 80px;"></td>
+                        <td><img src="{{ asset('assets/img/elements/1.jpg') }}" alt="demo" class="img-thumbnail rounded" style="max-width: 80px;"></td>
                         <td>عنوان تستی</td>
                         <td>درباره ما</td>
                         <td><span class="badge bg-success">فعال</span></td>
@@ -104,25 +104,14 @@
 
                         <div class="mb-3">
                             <label class="form-label">تصویر</label>
-                            <div class="dropzone" id="slideImageUpload" style="border: 1px dashed">
-                                <div class="dz-message needsclick">
-                                    فایل را اینجا رها کنید یا کلیک کنید برای انتخاب
-                                    <span class="note needsclick">(فرمت‌های مجاز: jpg, png, gif)</span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label class="form-label">تصویر</label>
                             <div class="input-group">
                                 <input type="text" id="selectedImage" class="form-control" placeholder="فایلی انتخاب نشده" readonly>
-                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fileManagerModal">
+                                <button type="button" class="btn btn-outline-primary" onclick="openFileManager()">
                                     انتخاب فایل
                                 </button>
                             </div>
                             <div class="mt-2" id="imagePreview" style="display: none;">
-                                <img src="" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
+                                <img src="" alt="Preview" class="img-thumbnail" style="max-width: 200px; border-radius: 8px">
                             </div>
                         </div>
 
@@ -145,23 +134,21 @@
                 </div>
                 <div class="modal-body">
                     <div class="row g-3">
-                        <!-- فرضاً چند تصویر تستی -->
                         <div class="col-md-3">
-                            <img src="{{ asset('assets/img/elements/1.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample1.jpg') }}')">
+                            <img src="{{ asset('assets/img/elements/1.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('assets/img/elements/1.jpg') }}', event)">
                         </div>
                         <div class="col-md-3">
-                            <img src="{{ asset('assets/img/elements/2.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample2.jpg') }}')">
+                            <img src="{{ asset('assets/img/elements/2.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('assets/img/elements/2.jpg') }}', event)">
                         </div>
                         <div class="col-md-3">
-                            <img src="{{ asset('assets/img/elements/3.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample3.jpg') }}')">
+                            <img src="{{ asset('assets/img/elements/3.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('assets/img/elements/3.jpg') }}', event)">
                         </div>
                         <div class="col-md-3">
-                            <img src="{{ asset('assets/img/elements/3.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample3.jpg') }}')">
+                            <img src="{{ asset('assets/img/elements/4.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('assets/img/elements/4.jpg') }}', event)">
                         </div>
                         <div class="col-md-3">
-                            <img src="{{ asset('assets/img/elements/3.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample3.jpg') }}')">
+                            <img src="{{ asset('assets/img/elements/5.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('assets/img/elements/5.jpg') }}', event)">
                         </div>
-                        <!-- ادامه تصاویر -->
                     </div>
                 </div>
             </div>
@@ -246,18 +233,28 @@
         });
     </script>
     <script>
-        function selectFile(url) {
-            // Set selected image URL into the input
+        function selectFile(url, event) {
+            event.preventDefault();
+            event.stopPropagation();
+
             document.getElementById('selectedImage').value = url;
 
-            // Show preview
             var preview = document.getElementById('imagePreview');
             preview.style.display = 'block';
             preview.querySelector('img').src = url;
 
-            // Close modal
-            var modal = bootstrap.Modal.getInstance(document.getElementById('fileManagerModal'));
-            modal.hide();
+            // فقط فایل منیجر مودال رو ببند بدون حذف بک‌دراپ اصلی
+            var modalEl = document.getElementById('fileManagerModal');
+            var modalInstance = bootstrap.Modal.getInstance(modalEl);
+            modalInstance.hide();
+        }
+
+        function openFileManager() {
+            var fileManager = new bootstrap.Modal(document.getElementById('fileManagerModal'), {
+                backdrop: false,
+                focus: true
+            });
+            fileManager.show();
         }
     </script>
 @endpush
