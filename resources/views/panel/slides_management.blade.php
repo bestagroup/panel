@@ -112,10 +112,57 @@
                             </div>
                         </div>
 
+
+                        <div class="mb-3">
+                            <label class="form-label">تصویر</label>
+                            <div class="input-group">
+                                <input type="text" id="selectedImage" class="form-control" placeholder="فایلی انتخاب نشده" readonly>
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#fileManagerModal">
+                                    انتخاب فایل
+                                </button>
+                            </div>
+                            <div class="mt-2" id="imagePreview" style="display: none;">
+                                <img src="" alt="Preview" class="img-thumbnail" style="max-width: 200px;">
+                            </div>
+                        </div>
+
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">ذخیره اطلاعات</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Manager Modal -->
+    <div class="modal fade" id="fileManagerModal" tabindex="-1" aria-labelledby="fileManagerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fileManagerModalLabel">انتخاب فایل</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <!-- فرضاً چند تصویر تستی -->
+                        <div class="col-md-3">
+                            <img src="{{ asset('assets/img/elements/1.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample1.jpg') }}')">
+                        </div>
+                        <div class="col-md-3">
+                            <img src="{{ asset('assets/img/elements/2.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample2.jpg') }}')">
+                        </div>
+                        <div class="col-md-3">
+                            <img src="{{ asset('assets/img/elements/3.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample3.jpg') }}')">
+                        </div>
+                        <div class="col-md-3">
+                            <img src="{{ asset('assets/img/elements/3.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample3.jpg') }}')">
+                        </div>
+                        <div class="col-md-3">
+                            <img src="{{ asset('assets/img/elements/3.jpg') }}" class="img-fluid img-thumbnail cursor-pointer" onclick="selectFile('{{ asset('uploads/sample3.jpg') }}')">
+                        </div>
+                        <!-- ادامه تصاویر -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,6 +244,21 @@
                 }
             });
         });
+    </script>
+    <script>
+        function selectFile(url) {
+            // Set selected image URL into the input
+            document.getElementById('selectedImage').value = url;
+
+            // Show preview
+            var preview = document.getElementById('imagePreview');
+            preview.style.display = 'block';
+            preview.querySelector('img').src = url;
+
+            // Close modal
+            var modal = bootstrap.Modal.getInstance(document.getElementById('fileManagerModal'));
+            modal.hide();
+        }
     </script>
 @endpush
 
