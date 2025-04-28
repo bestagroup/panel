@@ -1,13 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('dashboard'                , 'App\Http\Controllers\Panel\IndexController@index')         ->name('dashboard');
 
-Route::prefix('panel')->namespace('App\Http\Controllers\Panel')->group(function () {
-    Route::resource('menupanelmanagement'    , 'MenupanelController');
-    Route::resource('submenupanelmanagement' , 'SubmenupanelController');
-    Route::get('owner'                    , 'OwnerController@index')         ->name('owner');
+Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(function () {
+    Route::get('dashboard'       , 'IndexController@index')->name('dashboard');
+    Route::get('panel/owner'     , 'OwnerController@index')->name('owner');
+    Route::resource('panel/menupanelmanagement'    , 'MenupanelController');
+    Route::resource('panel/submenupanelmanagement' , 'SubmenupanelController');
 });
 
 //Route::middleware(['panel.access:panel'])->prefix('panel')->group(function () {
@@ -36,9 +37,8 @@ Route::get('/toggle-theme', function () {
     return back();
 })->name('toggle-theme');
 
+Auth::routes();
 
-
-//Route::get('/dashboard', function () {return view('dashboard');});
 Route::view('/panel/brand-management'           , 'panel.brand_management')         ->name('panel.brand_management');
 Route::view('/panel/profile-view'               , 'panel.profile_view')             ->name('panel.profile_view');
 Route::view('/panel/site-users'                 , 'panel.site_users')               ->name('panel.site_users');
@@ -61,4 +61,5 @@ Route::view('/panel/media-management'           , 'panel.media_management')     
 Route::view('/panel/discounts-management'       , 'panel.discounts_management')     ->name('panel.discounts_management');
 Route::view('/panel/file-management'            , 'panel.file_management')          ->name('panel.file_management');
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

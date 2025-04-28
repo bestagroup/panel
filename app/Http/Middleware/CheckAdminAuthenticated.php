@@ -14,19 +14,20 @@ class CheckAdminAuthenticated
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next , $guard = 'panel'): Response
+    public function handle(Request $request, Closure $next , $guard = null): Response
     {
+
         if (!Auth::guard($guard)->check()) {
             return redirect()->route('login');
         }
 
         $user = Auth::guard($guard)->user();
 
-        $hasAccess = $user->roles()->where('level', 'panel')->exists();
+        //$hasAccess = $user->roles()->where('level', 'admin')->exists();
 
-        if (!$hasAccess) {
-            abort(403, 'شما دسترسی به داشبورد را ندارید.');
-        }
+//        if (!$hasAccess) {
+//            abort(403, 'شما دسترسی به داشبورد را ندارید.');
+//        }
 
         return $next($request);
     }

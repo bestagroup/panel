@@ -22,24 +22,20 @@
                     <h4 class="mb-2 fw-semibold">خوش آمدید! 👋</h4>
                     <p class="mb-4">لطفاً وارد حساب خود شوید</p>
 
-                    <form id="formAuthentication" class="mb-3" action="{{ route('admin.login.submit') }}" method="POST">
+                    <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control" id="email" name="email"
-                                   placeholder="ایمیل یا نام کاربری" autofocus required>
-                            <label for="email">ایمیل یا نام کاربری</label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="ایمیل " autofocus required>
+                            <label for="email">ایمیل </label>
                         </div>
-
                         <div class="mb-3">
                             <div class="form-password-toggle">
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">
-                                        <input type="password" id="password" class="form-control" name="password"
-                                               placeholder="رمز عبور" required>
+                                        <input type="password" id="password" class="form-control" name="password" placeholder="رمز عبور" required>
                                         <label for="password">رمز عبور</label>
                                     </div>
-                                    <span class="input-group-text cursor-pointer"><i
-                                            class="mdi mdi-eye-off-outline"></i></span>
+                                    <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
                                 </div>
                             </div>
                         </div>

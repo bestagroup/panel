@@ -63,7 +63,7 @@ return new class extends Migration
             'level'     => 'admin',
             'type_id'   => '1',
             'email'     => 'hosseindbk@gmail.com',
-            'password'  => Hash::make('1123581320'),
+            'password'  => Hash::make('123456789'),
         ]);
     }
     /**
