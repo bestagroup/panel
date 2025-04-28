@@ -89,7 +89,12 @@
           <li>
             <a class="dropdown-item" href="#">
               <i class="mdi mdi-logout me-2"></i>
-              <span class="align-middle">خروج</span>
+                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                    @csrf
+                    <button type="submit" style="background: none; border: none; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer;">
+                        <span class="align-middle">خروج</span>
+                    </button>
+                </form>
             </a>
           </li>
         </ul>

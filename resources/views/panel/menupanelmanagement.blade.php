@@ -61,7 +61,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route(request()->segment(2).'.'.'store')}}" id="form" method="POST">
+                    <form action="{{route(request()->segment(2).'.'.'store')}}" id="addform" method="POST">
                         {{csrf_field()}}
                         <div class="col-md-3">
                             <div class="form-group">
@@ -123,7 +123,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route(request()->segment(2).'.update' , $menupanel->id)}}" method="POST">
+                    <form action="{{route(request()->segment(2).'.update' , $menupanel->id)}}" id="editform_{{$menupanel->id}}" method="POST">
                         {{csrf_field()}}
                         <input type="hidden" name="menu_id" id="menu_id_{{$menupanel->id}}" value="{{$menupanel->id}}" />
                         <div class="col-md-3">
@@ -181,6 +181,7 @@
 @endsection
 @section('script')
     <script src="{{ 'https://cdn.datatables.net/2.2.2/js/dataTables.min.js' }}"></script>
+    <script src="{{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}}"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -207,33 +208,56 @@
         jQuery(document).ready(function(){
             jQuery('#submit').click(function(e){
                 e.preventDefault();
+
+                var button = jQuery(this);
+                var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
+
+                // قفل کردن دکمه + گذاشتن اسپینر
+                button.prop('disabled', true);
+                button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال ارسال...');
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
 
-                    jQuery.ajax({
-                        url: "{{route(request()->segment(2).'.'.'store')}}",
-                        method: 'POST',
-                        data: {
-                            "_token"    : "{{ csrf_token() }}",
-                            title       : jQuery('#title').val(),
-                            label       : jQuery('#label').val(),
-                            class       : jQuery('#class').val(),
-                            controller  : jQuery('#controller').val(),
-                            submenu     : jQuery('#submenu').val(),
-                            status      : jQuery('#status').val()
-                        },
-                        success: function (data) {
-                            if(data.success == true){
-                                swal(data.subject, data.message, data.flag);
-                                $('#form')[0].reset();
-                            } else {
-                                swal(data.subject, data.message, data.flag);
-                            }
-                        },
-                    });
+                jQuery.ajax({
+                    url: "{{route(request()->segment(2).'.'.'store')}}",
+                    method: 'POST',
+                    data: {
+                        "_token"    : "{{ csrf_token() }}",
+                        title       : jQuery('#title').val(),
+                        label       : jQuery('#label').val(),
+                        class       : jQuery('#class').val(),
+                        controller  : jQuery('#controller').val(),
+                        submenu     : jQuery('#submenu').val(),
+                        status      : jQuery('#status').val()
+                    },
+                    success: function (data) {
+                        if(data.success == true){
+                            // بستن مدال
+                            var modal = bootstrap.Modal.getInstance(document.querySelector('#addModal')); // اینجا #myModal باید id مدال شما باشه
+                            if (modal) modal.hide();
+                            $('#addform')[0].reset();
+                            $('.yajra-datatable').DataTable().ajax.reload(null, false);
+                            //swal(data.subject, data.message, data.flag);
+
+                            // رفرش کردن جدول
+
+                        } else {
+                            swal(data.subject, data.message, data.flag);
+                        }
+                    },
+                    error: function () {
+                        swal('خطا', 'مشکلی پیش آمد. لطفاً دوباره تلاش کنید.', 'error');
+                    },
+                    complete: function () {
+                        // چه موفقیت چه خطا، دکمه رو برگردون
+                        button.prop('disabled', false);
+                        button.html(originalButtonHtml);
+                    }
+                });
             });
         });
     </script>
@@ -241,6 +265,13 @@
         jQuery(document).ready(function(){
             jQuery('[id^=editsubmit_]').click(function(e){
                 e.preventDefault();
+                var button = jQuery(this);
+                var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
+
+                // قفل کردن دکمه + گذاشتن اسپینر
+                button.prop('disabled', true);
+                button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال ارسال...');
+
                 var id = jQuery(this).attr('id').split('_')[1];
                 $.ajaxSetup({
                     headers: {
@@ -261,10 +292,25 @@
                         status          : jQuery('#status_' + id).val()
                     },
                     success: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                        if(data.success == true){
+                            // بستن مدال
+                            var modalId = '#editModal' + id;
+                            var modal = bootstrap.Modal.getInstance(document.querySelector(modalId)); // اینجا #myModal باید id مدال شما باشه
+                            if (modal) modal.hide();
+                            $('.yajra-datatable').DataTable().ajax.reload(null, false);
+                            //swal(data.subject, data.message, data.flag);
+
+                        } else {
+                            swal(data.subject, data.message, data.flag);
+                        }
                     },
-                    error: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                    error: function () {
+                        swal('خطا', 'مشکلی پیش آمد. لطفاً دوباره تلاش کنید.', 'error');
+                    },
+                    complete: function () {
+                        // چه موفقیت چه خطا، دکمه رو برگردون
+                        button.prop('disabled', false);
+                        button.html(originalButtonHtml);
                     }
                 });
             });
@@ -274,29 +320,50 @@
         jQuery(document).ready(function(){
             jQuery('[id^=deletesubmit_]').click(function(e){
                 e.preventDefault();
-                var id = jQuery(this).attr('id').split('_')[1];
+
+                var button = jQuery(this);
+                var id = button.data('id');
+                var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
+
+                // قفل کردن دکمه + گذاشتن اسپینر
+                button.prop('disabled', true);
+                button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال حذف...');
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
+
                 jQuery.ajax({
-                    url: "{{ route(request()->segment(2).'.destroy' , 0) }}",
+                    url: "{{ route(request()->segment(2).'.destroy', 0) }}",
                     method: 'delete',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        id   : jQuery(this).data("id"),
-
+                        id: id,
                     },
                     success: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                        // مدال را ببند
+                        var modalId = '#deleteModal' + id;
+                        var modal = bootstrap.Modal.getInstance(document.querySelector(modalId));
+                        modal.hide();
+
+                        // جدول را رفرش کن
                         $('.yajra-datatable').DataTable().ajax.reload(null, false);
                     },
-                    error: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                    error: function () {
+                        alert('مشکلی پیش آمد. لطفاً دوباره تلاش کنید.');
+                    },
+                    complete: function () {
+                        // چه موفق باشه چه خطا بده، دکمه رو برگردون
+                        button.prop('disabled', false);
+                        button.html(originalButtonHtml);
                     }
                 });
             });
         });
     </script>
+
+
+
 @endsection
