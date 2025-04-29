@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(function () {
     Route::get('dashboard'       , 'IndexController@index')->name('dashboard');
     Route::get('panel/owner'     , 'OwnerController@index')->name('owner');
-    Route::resource('panel/menupanelmanagement'    , 'MenupanelController');
-    Route::resource('panel/submenupanelmanagement' , 'SubmenupanelController');
+    Route::resource('panel/menupanel'    , 'MenupanelController');
+    Route::resource('panel/submenupanel' , 'SubmenupanelController');
 });
 
 //Route::middleware(['panel.access:panel'])->prefix('panel')->group(function () {

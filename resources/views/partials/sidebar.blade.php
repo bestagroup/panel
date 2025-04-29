@@ -42,16 +42,16 @@
     <ul class="menu-inner py-1">
 
         @foreach($menupanels as $menupanel)
-        <li class="menu-item @foreach($submenupanels as $submenupanel) @if($submenupanel->menu_id == $manupanel->id) {{ Route::is($submenupanel->slug)  ? 'active open' : ''  }} @endif @endforeach">
+        <li class="menu-item @foreach($submenupanels as $submenupanel) @if($submenupanel->menu_id == $menupanel->id) {{ request()->segment(2) == $submenupanel->slug ? 'active open' : ''  }} @endif @endforeach">
             <a class="menu-link menu-toggle" href="javascript:void(0);">
                 <i class="menu-icon tf-icons mdi {{$menupanel->icon}}"></i>
                 <div>{{$menupanel->label}}</div>
             </a>
             <ul class="menu-sub">
                 @foreach($submenupanels as $submenupanel)
-                    @if($submenupanel->menu_id == $manupanel->id)
+                    @if($submenupanel->menu_id == $menupanel->id)
                         <li class="menu-item {{ Route::is($submenupanel->slug) ? 'active' : '' }}">
-                            <a class="menu-link" href="{{ route($submenupanel->slug) }}">
+                            <a class="menu-link" href="{{url('panel/'.$submenupanel->slug)}}">
                                 <div>{{$submenupanel->label}}</div>
                             </a>
                         </li>

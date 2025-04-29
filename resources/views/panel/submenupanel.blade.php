@@ -62,23 +62,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route(request()->segment(2).'.'.'store')}}" id="form" method="POST">
+                    <form action="{{route(request()->segment(2).'.'.'store')}}" id="addform" method="POST">
                         {{csrf_field()}}
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p class="mg-b-10">نام  زیر منو داشبورد فارسی</p>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">نام  زیر منو داشبورد فارسی</label>
                                 <input type="text" name="label" id="label" data-required="1" placeholder="نام زیر منو داشبورد فارسی را وارد کنید" class="form-control" />
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p class="mg-b-10">نام  زیر منو داشبورد</p>
+                            <div class="col-md-4">
+                                <label class="form-label">نام  زیر منو داشبورد</label>
                                 <input type="text" name="title" id="title" data-required="1" placeholder="نام زیر منو داشبورد را وارد کنید" class="form-control" />
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p class="mg-b-10">انتخاب زیر منو</p>
+                            <div class="col-md-4">
+                                <label class="form-label">انتخاب زیر منو</label>
                                 <select name="menupanel_id" id="menupanel_id" class="form-control select-lg select2">
                                     <option value="">انتخاب زیر منو</option>
                                     @foreach($menupanels as $menupanel)
@@ -87,21 +83,17 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p class="mg-b-10">کلاس داشبورد</p>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">کلاس داشبورد</label>
                                 <input type="text" name="class" id="class" data-required="1" placeholder="کلاس زیر منو داشبورد را وارد کنید" class="form-control" />
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p class="mg-b-10">کنترلر داشبورد</p>
+                            <div class="col-md-4">
+                                <label class="form-label">کنترلر داشبورد</label>
                                 <input type="text" name="controller" id="controller" data-required="1" placeholder="کلاس زیر منو داشبورد را وارد کنید" class="form-control" />
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <p class="mg-b-10">نمایش/عدم نمایش</p>
+                            <div class="col-md-4">
+                                <label class="form-label">نمایش/عدم نمایش</label>
                                 <select name="status" id="status" class="form-control">
                                     <option value="4" >نمایش</option>
                                     <option value="0" >عدم نمایش</option>
@@ -126,24 +118,20 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{route(request()->segment(2).'.update' , $submenupanel->id)}}" method="POST">
+                        <form action="{{route(request()->segment(2).'.update' , $submenupanel->id)}}" id="editform_{{$submenupanel->id}}" method="POST">
                             {{csrf_field()}}
                             <input type="hidden" name="menu_id" id="menu_id_{{$submenupanel->id}}" value="{{$submenupanel->id}}" />
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p class="mg-b-10">نام  زیر منو داشبورد فارسی</p>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">نام  زیر منو داشبورد فارسی</label>
                                     <input type="text" name="label" id="label_{{$submenupanel->id}}" value="{{$submenupanel->label}}" class="form-control" />
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p class="mg-b-10">نام  زیر منو داشبورد</p>
+                                <div class="col-md-4">
+                                    <label class="form-label">نام  زیر منو داشبورد</label>
                                     <input type="text" name="title" id="title_{{$submenupanel->id}}" value="{{$submenupanel->title}}" class="form-control" />
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p class="mg-b-10">انتخاب زیر منو</p>
+                                <div class="col-md-4">
+                                    <label class="form-label">انتخاب زیر منو</label>
                                     <select name="menupanel_id" id="menupanel_id_{{$submenupanel->id}}" class="form-control select-lg select2">
                                         <option value="">انتخاب زیر منو</option>
                                         @foreach($menupanels as $menupanel)
@@ -152,21 +140,17 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p class="mg-b-10">کلاس داشبورد</p>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">کلاس داشبورد</label>
                                     <input type="text" name="class" id="class_{{$submenupanel->id}}" value="{{$submenupanel->class}}"  class="form-control" />
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p class="mg-b-10">کنترلر داشبورد</p>
+                                <div class="col-md-4">
+                                    <label class="form-label">کنترلر داشبورد</label>
                                     <input type="text" name="controller" id="controller_{{$submenupanel->id}}"  value="{{$submenupanel->controller}}" class="form-control" />
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <p class="mg-b-10">نمایش/عدم نمایش</p>
+                                <div class="col-md-4">
+                                    <label class="form-label">نمایش/عدم نمایش</label>
                                     <select name="status" id="status_{{$submenupanel->id}}" class="form-control">
                                         <option value="4" >نمایش</option>
                                         <option value="0" >عدم نمایش</option>
@@ -185,6 +169,7 @@
 @endsection
 @section('script')
     <script src="{{ 'https://cdn.datatables.net/2.2.2/js/dataTables.min.js' }}"></script>
+    <script src="{{'https://cdn.jsdelivr.net/npm/sweetalert2@11'}}"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -212,6 +197,12 @@
         jQuery(document).ready(function(){
             jQuery('#submit').click(function(e){
                 e.preventDefault();
+
+                var button = jQuery(this);
+                var originalButtonHtml = button.html();
+                button.prop('disabled', true);
+                button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال ارسال...');
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -233,12 +224,24 @@
                     },
                     success: function (data) {
                         if(data.success == true){
-                            swal(data.subject, data.message, data.flag);
-                            $('#form')[0].reset();
+                            // بستن مدال
+                            var modal = bootstrap.Modal.getInstance(document.querySelector('#addModal'));
+                            if (modal) modal.hide();
+                            $('#addform')[0].reset();
+                            $('.yajra-datatable').DataTable().ajax.reload(null, false);
+                            //swal(data.subject, data.message, data.flag);
+
                         } else {
                             swal(data.subject, data.message, data.flag);
                         }
                     },
+                    error: function () {
+                        swal('خطا', 'مشکلی پیش آمد. لطفاً دوباره تلاش کنید.', 'error');
+                    },
+                    complete: function () {
+                        button.prop('disabled', false);
+                        button.html(originalButtonHtml);
+                    }
                 });
             });
         });
@@ -247,6 +250,12 @@
         jQuery(document).ready(function(){
             jQuery('[id^=editsubmit_]').click(function(e){
                 e.preventDefault();
+                var button = jQuery(this);
+                var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
+
+                button.prop('disabled', true);
+                button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال ارسال...');
+
                 var id = jQuery(this).attr('id').split('_')[1];
                 $.ajaxSetup({
                     headers: {
@@ -268,10 +277,25 @@
                         status          : jQuery('#status_' + id).val()
                     },
                     success: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                        if(data.success == true){
+                            // بستن مدال
+                            var modalId = '#editModal' + id;
+                            var modal = bootstrap.Modal.getInstance(document.querySelector(modalId)); // اینجا #myModal باید id مدال شما باشه
+                            if (modal) modal.hide();
+                            $('.yajra-datatable').DataTable().ajax.reload(null, false);
+                            //swal(data.subject, data.message, data.flag);
+
+                        } else {
+                            swal(data.subject, data.message, data.flag);
+                        }
                     },
-                    error: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                    error: function () {
+                        swal('خطا', 'مشکلی پیش آمد. لطفاً دوباره تلاش کنید.', 'error');
+                    },
+                    complete: function () {
+
+                        button.prop('disabled', false);
+                        button.html(originalButtonHtml);
                     }
                 });
             });
@@ -281,26 +305,44 @@
         jQuery(document).ready(function(){
             jQuery('[id^=deletesubmit_]').click(function(e){
                 e.preventDefault();
-                var id = jQuery(this).attr('id').split('_')[1];
+
+                var button = jQuery(this);
+                var id = button.data('id');
+                var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
+
+                // قفل کردن دکمه + گذاشتن اسپینر
+                button.prop('disabled', true);
+                button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال حذف...');
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
+
                 jQuery.ajax({
-                    url: "{{ route(request()->segment(2).'.destroy' , 0) }}",
+                    url: "{{ route(request()->segment(2).'.destroy', 0) }}",
                     method: 'delete',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        id   : jQuery(this).data("id"),
-
+                        id: id,
                     },
                     success: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                        // مدال را ببند
+                        var modalId = '#deleteModal' + id;
+                        var modal = bootstrap.Modal.getInstance(document.querySelector(modalId));
+                        modal.hide();
+
+                        // جدول را رفرش کن
                         $('.yajra-datatable').DataTable().ajax.reload(null, false);
                     },
-                    error: function (data) {
-                        swal(data.subject, data.message, data.flag);
+                    error: function () {
+                        alert('مشکلی پیش آمد. لطفاً دوباره تلاش کنید.');
+                    },
+                    complete: function () {
+                        // چه موفق باشه چه خطا بده، دکمه رو برگردون
+                        button.prop('disabled', false);
+                        button.html(originalButtonHtml);
                     }
                 });
             });

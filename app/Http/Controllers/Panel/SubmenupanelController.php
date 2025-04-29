@@ -14,8 +14,8 @@ class SubmenupanelController extends Controller
     public function index(Request $request)
     {
 
-        $submenupanels = SubmenuPanel::select('id','title','label','menu_id','slug','status','class','controller')->get();
-        $menupanels = Menupanel::select('id', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+        $submenupanels = SubmenuPanel::select('id','priority','title','label','menu_id','slug','status','class','controller')->get();
+        $menupanels = Menupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
         $thispage       = [
             'title'   => 'مدیریت زیرمنو داشبورد',
             'list'    => 'لیست زیرمنو داشبورد',
@@ -67,7 +67,7 @@ class SubmenupanelController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.panel_submenu_management')->with(compact(['thispage' , 'submenupanels' , 'menupanels']));
+        return view('panel.submenupanel')->with(compact(['thispage' , 'submenupanels' , 'menupanels']));
     }
 
     public function store(Request $request)
