@@ -9,6 +9,8 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/owner'        , 'OwnerController');
     Route::resource('panel/menupanel'    , 'MenupanelController');
     Route::resource('panel/submenupanel' , 'SubmenupanelController');
+    Route::resource('panel/menusite'     , 'MenusiteController');
+    Route::resource('panel/submenusite'  , 'SubmenusiteController');
 });
 
 //Route::middleware(['panel.access:panel'])->prefix('panel')->group(function () {
