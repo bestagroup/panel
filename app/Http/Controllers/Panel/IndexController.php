@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\MenuPanel;
+use App\Models\SubmenuPanel;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -12,7 +14,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+        $submenupanels  = Submenupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
+        return view('dashboard')->with(compact(['menupanels' , 'submenupanels']));
     }
 
     /**
