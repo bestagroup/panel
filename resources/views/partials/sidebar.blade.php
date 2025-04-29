@@ -59,7 +59,7 @@
     <ul class="menu-inner py-1">
 
         <!-- داشبورد -->
-        <li class="menu-item {{ Route::is('panel.brand_management') ? 'active open' : '' }}">
+        <li class="menu-item {{ Route::is('owner') || Route::is('menupanelmanagement.*') || Route::is('submenupanelmanagement.*') ? 'active open' : '' }}">
             <a class="menu-link menu-toggle" href="javascript:void(0);">
                 <i class="menu-icon tf-icons mdi mdi-view-dashboard"></i>
                 <div>مدیریت داشبورد</div>
@@ -70,22 +70,19 @@
                         <div>مدیریت برند</div>
                     </a>
                 </li>
-            </ul>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Route::is('menupanelmanagement') ? 'active' : '' }}">
+                <li class="menu-item {{ Route::is('menupanelmanagement.*') ? 'active' : '' }}">
                     <a class="menu-link" href="{{ route('menupanelmanagement.index') }}">
                         <div>مدیریت منو داشبورد</div>
                     </a>
                 </li>
-            </ul>
-            <ul class="menu-sub">
-                <li class="menu-item {{ Route::is('submenupanelmanagement') ? 'active' : '' }}">
+                <li class="menu-item {{ Route::is('submenupanelmanagement.*') ? 'active' : '' }}">
                     <a class="menu-link" href="{{ route('submenupanelmanagement.index') }}">
                         <div>مدیریت زیر منو داشبورد</div>
                     </a>
                 </li>
             </ul>
         </li>
+
 
         <!-- مدیریت کاربران -->
         <li class="menu-item {{ Route::is('panel.profile_view') || Route::is('panel.site_users') || Route::is('panel.notifications_management') || Route::is('panel.payments_management') ? 'active open' : '' }}">

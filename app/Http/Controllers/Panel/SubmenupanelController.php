@@ -67,7 +67,7 @@ class SubmenupanelController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.submenupanelmanagement')->with(compact(['thispage' , 'submenupanels' , 'menupanels']));
+        return view('panel.panel_submenu_management')->with(compact(['thispage' , 'submenupanels' , 'menupanels']));
     }
 
     public function store(Request $request)
