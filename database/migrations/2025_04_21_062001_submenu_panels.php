@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('submenu_panels', function (Blueprint $table) {
             $table->id()->comment('شناسه یکتا پنل زیرمنو');
+            $table->unsignedBigInteger('priority')->comment('شماره اولویت');
             $table->string('title')->comment('عنوان زیرمنو');
             $table->string('label')->comment('عنوان فارسی پنل منو');
             $table->foreignId('menu_id')->constrained('menu_panels')->onDelete('cascade')->comment('شناسه منو اصلی که این زیرمنو به آن تعلق دارد');

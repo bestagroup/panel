@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Models\MenuPanel;
 use App\Models\Permission;
+use App\Models\SubmenuPanel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,8 @@ class MenupanelController extends Controller
     public function index(Request $request)
     {
 
-        $menupanels = Menupanel::select('id', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+        $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+        $submenupanels  = Submenupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
         $thispage       = [
             'title'   => 'مدیریت منو داشبورد',
             'list'    => 'لیست منو داشبورد',
@@ -29,11 +31,11 @@ class MenupanelController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = Menupanel::select('id', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+            $data = Menupanel::select('priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->orderBy('priority')->get();
 
             return Datatables::of($data)
                 ->addColumn('id', function ($data) {
-                    return ($data->id);
+                    return ($data->priority);
                 })
                 ->addColumn('title', function ($data) {
                     return ($data->title);
@@ -65,7 +67,7 @@ class MenupanelController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.menupanelmanagement')->with(compact(['thispage' , 'menupanels']));
+        return view('panel.menupanelmanagement')->with(compact(['thispage' , 'menupanels' , 'submenupanels']));
     }
 
     public function store(Request $request)
