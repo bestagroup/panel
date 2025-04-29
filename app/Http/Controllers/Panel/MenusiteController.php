@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\MenuPanel;
-use App\Models\MenuSite;
+use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\SubmenuPanel;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class MenusiteController extends Controller
 
         $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
         $submenupanels  = Submenupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
-        $submenupanels  = MenuSite::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
+        $menus          = Menu::select('id','priority', 'title', 'slug', 'status' , 'class' , 'controller')->get();
         $thispage       = [
             'title'   => 'مدیریت منو سایت',
             'list'    => 'لیست منو سایت',
@@ -29,7 +29,7 @@ class MenusiteController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = Menupanel::select('priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->orderBy('priority')->get();
+            $data = Menu::select('id' , 'priority', 'title', 'slug', 'status' , 'class' , 'controller')->get();
 
             return Datatables::of($data)
                 ->addColumn('id', function ($data) {
@@ -37,9 +37,6 @@ class MenusiteController extends Controller
                 })
                 ->addColumn('title', function ($data) {
                     return ($data->title);
-                })
-                ->addColumn('label', function ($data) {
-                    return ($data->label);
                 })
                 ->addColumn('slug', function ($data) {
                     return ($data->slug);
@@ -65,7 +62,7 @@ class MenusiteController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.menupanel')->with(compact(['thispage' , 'menupanels' , 'submenupanels']));
+        return view('panel.menusite')->with(compact(['thispage' , 'menupanels' , 'submenupanels' , 'menus']));
     }
 
     public function store(Request $request)

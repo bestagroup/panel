@@ -18,7 +18,7 @@ class MenupanelController extends Controller
     public function index(Request $request)
     {
 
-        $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+        $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'submenu' , 'class' , 'controller')->get();
         $submenupanels  = Submenupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
         $thispage       = [
             'title'   => 'مدیریت منو داشبورد',
@@ -31,7 +31,7 @@ class MenupanelController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = Menupanel::select('priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->orderBy('priority')->get();
+            $data = Menupanel::select('id' ,'priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->orderBy('priority')->get();
 
             return Datatables::of($data)
                 ->addColumn('id', function ($data) {

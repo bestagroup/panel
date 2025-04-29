@@ -17,7 +17,6 @@
                     <tr class="table-light">
                         <th>اولویت نمایش</th>
                         <th>نام صفحه</th>
-                        <th>نام صفحه فارسی</th>
                         <th>آدرس صفحه</th>
                         <th>کلاس</th>
                         <th>کنترلر</th>
@@ -33,8 +32,8 @@
     </div>
 
     <!-- Delete Modal -->
-    @foreach($menupanels as $menupanel)
-    <div class="modal fade" id="deleteModal{{$menupanel->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    @foreach($menus as $menu)
+    <div class="modal fade" id="deleteModal{{$menu->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center">
                 <div class="modal-header border-bottom-0">
@@ -46,7 +45,7 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="button" class="btn btn-danger" id="deletesubmit_{{$menupanel->id}}" data-id="{{$menupanel->id}}">حذف</button>
+                    <button type="button" class="btn btn-danger" id="deletesubmit_{{$menu->id}}" data-id="{{$menu->id}}">حذف</button>
                 </div>
             </div>
         </div>
@@ -65,15 +64,11 @@
                         {{csrf_field()}}
                         <div class="row mb-3">
                             <div class="col-md-4">
-                                <label class="form-label">نام  منو داشبورد فارسی</label>
-                                <input type="text" name="label" id="label" data-required="1" placeholder="نام منو داشبورد فارسی را وارد کنید" class="form-control" />
+                                <label class="form-label">عنوان صفحه</label>
+                                <input type="text" name="title" id="title" data-required="1" placeholder="عنوان صفحه را وارد کنید" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">نام  منو داشبورد</label>
-                                <input type="text" name="title" id="title" data-required="1" placeholder="نام منو داشبورد را وارد کنید" class="form-control" />
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">زیر  منو داشبورد</label>
+                                <label class="form-label">زیرصفحه</label>
                                 <select name="submenu" id="submenu" class="form-control">
                                     <option value="1" selected>دارد</option>
                                     <option value="0">ندارد</option>
@@ -82,11 +77,11 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
-                                <label class="form-label">کلاس داشبورد</label>
+                                <label class="form-label">کلاس صفحه</label>
                                 <input type="text" name="class" id="class" data-required="1" placeholder="کلاس منو داشبورد را وارد کنید" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">کنترلر داشبورد</label>
+                                <label class="form-label">کنترلر صفحه</label>
                                 <input type="text" name="controller" id="controller" data-required="1" placeholder="کلاس منو داشبورد را وارد کنید" class="form-control" />
                             </div>
                             <div class="col-md-4">
@@ -106,55 +101,52 @@
         </div>
     </div>
     <!-- Edit Modal -->
-    @foreach($menupanels as $menupanel)
-    <div class="modal fade" id="editModal{{$menupanel->id}}" tabindex="-1" aria-labelledby="editModalLabel{{$menupanel->id}}" aria-hidden="true">
+    @foreach($menus as $menu)
+    <div class="modal fade" id="editModal{{$menu->id}}" tabindex="-1" aria-labelledby="editModalLabel{{$menu->id}}" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel{{$menupanel->id}}">{{$thispage['edit']}}</h5>
+                    <h5 class="modal-title" id="editModalLabel{{$menu->id}}">{{$thispage['edit']}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route(request()->segment(2).'.update' , $menupanel->id)}}" id="editform_{{$menupanel->id}}" method="POST">
+                    <form action="{{route(request()->segment(2).'.update' , $menu->id)}}" id="editform_{{$menu->id}}" method="POST">
                         {{csrf_field()}}
-                        <input type="hidden" name="menu_id" id="menu_id_{{$menupanel->id}}" value="{{$menupanel->id}}" />
+                        <input type="hidden" name="menu_id" id="menu_id_{{$menu->id}}" value="{{$menu->id}}" />
                         <div class="row mb-3">
+
                             <div class="col-md-4">
-                                <label class="form-label">نام  منو داشبورد فارسی</label>
-                                <input type="text" name="label" id="label_{{$menupanel->id}}" value="{{$menupanel->label}}" class="form-control" />
+                                <label class="form-label">عنوان صفحه</label>
+                                <input type="text" name="title" id="title_{{$menu->id}}" value="{{$menu->title}}" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">نام  منو داشبورد</label>
-                                <input type="text" name="title" id="title_{{$menupanel->id}}" value="{{$menupanel->title}}" class="form-control" />
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">زیر  منو داشبورد</label>
-                                <select name="submenu" id="submenu_{{$menupanel->id}}" class="form-control">
-                                    <option value="1" selected>دارد</option>
-                                    <option value="0">ندارد</option>
+                                <label class="form-label">زیر صفحه</label>
+                                <select name="submenu" id="submenu_{{$menu->id}}" class="form-control">
+                                    <option value="1" {{$menu->submenu == 1 ? 'selected' : '' }} >دارد</option>
+                                    <option value="0" {{$menu->submenu == 0 ? 'selected' : '' }}>ندارد</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label class="form-label">کلاس داشبورد</label>
-                                <input type="text" name="class" id="class_{{$menupanel->id}}" value="{{$menupanel->class}}"  class="form-control" />
+                                <input type="text" name="class" id="class_{{$menu->id}}" value="{{$menu->class}}"  class="form-control" />
                             </div>
 
                             <div class="col-md-4">
                                 <label class="form-label">کنترلر داشبورد</label>
-                                <input type="text" name="controller" id="controller_{{$menupanel->id}}"  value="{{$menupanel->controller}}" class="form-control" />
+                                <input type="text" name="controller" id="controller_{{$menu->id}}"  value="{{$menu->controller}}" class="form-control" />
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">نمایش/عدم نمایش</label>
-                                <select name="status" id="status_{{$menupanel->id}}" class="form-control">
-                                    <option value="4" >نمایش</option>
-                                    <option value="0" >عدم نمایش</option>
+                                <select name="status" id="status_{{$menu->id}}" class="form-control">
+                                    <option value="4" {{$menu->status == 4 ? 'selected' : '' }}>نمایش</option>
+                                    <option value="0" {{$menu->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
                                 </select>
                             </div>
                         </div>
                         <div class="text-end">
-                            <button type="button" id="editsubmit_{{$menupanel->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
+                            <button type="button" id="editsubmit_{{$menu->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
                         </div>
                     </form>
                 </div>
@@ -179,7 +171,6 @@
                 columns: [
                     {data: 'id'             , name: 'id'        },
                     {data: 'title'          , name: 'title'     },
-                    {data: 'label'          , name: 'label'     },
                     {data: 'slug'           , name: 'slug'      },
                     {data: 'class'          , name: 'class'     },
                     {data: 'controller'     , name: 'controller'},
@@ -215,7 +206,6 @@
                     data: {
                         "_token"    : "{{ csrf_token() }}",
                         title       : jQuery('#title').val(),
-                        label       : jQuery('#label').val(),
                         class       : jQuery('#class').val(),
                         controller  : jQuery('#controller').val(),
                         submenu     : jQuery('#submenu').val(),
@@ -269,7 +259,6 @@
                         "_token"        : "{{ csrf_token() }}",
                         id              : jQuery('#menu_id_' + id).val(),
                         title           : jQuery('#title_' + id).val(),
-                        label           : jQuery('#label_' + id).val(),
                         class           : jQuery('#class_' + id).val(),
                         controller      : jQuery('#controller_' + id).val(),
                         submenu         : jQuery('#submenu_' + id).val(),

@@ -75,7 +75,8 @@
                             <div class="col-md-4">
                                 <label class="form-label">زیر  منو داشبورد</label>
                                 <select name="submenu" id="submenu" class="form-control">
-                                    <option value="1" selected>دارد</option>
+                                    <option value="" selected>انتخاب کنید</option>
+                                    <option value="1" >دارد</option>
                                     <option value="0">ندارد</option>
                                 </select>
                             </div>
@@ -92,6 +93,7 @@
                             <div class="col-md-4">
                                 <label class="form-label">نمایش/عدم نمایش</label>
                                 <select name="status" id="status" class="form-control">
+                                    <option value="" selected>انتخاب کنید</option>
                                     <option value="4" >نمایش</option>
                                     <option value="0" >عدم نمایش</option>
                                 </select>
@@ -130,8 +132,8 @@
                             <div class="col-md-4">
                                 <label class="form-label">زیر  منو داشبورد</label>
                                 <select name="submenu" id="submenu_{{$menupanel->id}}" class="form-control">
-                                    <option value="1" selected>دارد</option>
-                                    <option value="0">ندارد</option>
+                                    <option value="1" {{$menupanel->submenu == 1 ? 'selected' : '' }} >دارد</option>
+                                    <option value="0" {{$menupanel->submenu == 0 ? 'selected' : '' }}>ندارد</option>
                                 </select>
                             </div>
                         </div>
@@ -148,8 +150,8 @@
                             <div class="col-md-4">
                                 <label class="form-label">نمایش/عدم نمایش</label>
                                 <select name="status" id="status_{{$menupanel->id}}" class="form-control">
-                                    <option value="4" >نمایش</option>
-                                    <option value="0" >عدم نمایش</option>
+                                    <option value="4" {{$menupanel->status == 4 ? 'selected' : '' }}>نمایش</option>
+                                    <option value="0" {{$menupanel->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
                                 </select>
                             </div>
                         </div>
@@ -252,7 +254,6 @@
                 var button = jQuery(this);
                 var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
 
-                // قفل کردن دکمه + گذاشتن اسپینر
                 button.prop('disabled', true);
                 button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال ارسال...');
 

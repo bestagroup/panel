@@ -76,7 +76,7 @@
                             <div class="col-md-4">
                                 <label class="form-label">انتخاب زیر منو</label>
                                 <select name="menupanel_id" id="menupanel_id" class="form-control select-lg select2">
-                                    <option value="">انتخاب زیر منو</option>
+                                    <option value="" selected>انتخاب کنید</option>
                                     @foreach($menupanels as $menupanel)
                                         <option value="{{$menupanel->id}}">{{$menupanel->label}}</option>
                                     @endforeach
@@ -95,6 +95,7 @@
                             <div class="col-md-4">
                                 <label class="form-label">نمایش/عدم نمایش</label>
                                 <select name="status" id="status" class="form-control">
+                                    <option value="" selected>انتخاب کنید</option>
                                     <option value="4" >نمایش</option>
                                     <option value="0" >عدم نمایش</option>
                                 </select>
@@ -135,7 +136,7 @@
                                     <select name="menupanel_id" id="menupanel_id_{{$submenupanel->id}}" class="form-control select-lg select2">
                                         <option value="">انتخاب زیر منو</option>
                                         @foreach($menupanels as $menupanel)
-                                            <option value="{{$menupanel->id}}">{{$menupanel->label}}</option>
+                                            <option value="{{$menupanel->id}}" {{$submenupanel->menu_id == $menupanel->id ? 'selected' : '' }}>{{$menupanel->label}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -152,8 +153,8 @@
                                 <div class="col-md-4">
                                     <label class="form-label">نمایش/عدم نمایش</label>
                                     <select name="status" id="status_{{$submenupanel->id}}" class="form-control">
-                                        <option value="4" >نمایش</option>
-                                        <option value="0" >عدم نمایش</option>
+                                        <option value="4" {{$submenupanel->status == 4 ? 'selected' : '' }}>نمایش</option>
+                                        <option value="0" {{$submenupanel->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
                                     </select>
                                 </div>
                             </div>
