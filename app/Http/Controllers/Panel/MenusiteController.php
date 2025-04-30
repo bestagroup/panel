@@ -8,6 +8,7 @@ use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\SubmenuPanel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class MenusiteController extends Controller
@@ -17,7 +18,7 @@ class MenusiteController extends Controller
 
         $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
         $submenupanels  = Submenupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
-        $menus          = Menu::select('id','priority', 'title', 'slug', 'status' , 'class' , 'controller')->get();
+        $menus          = Menu::all();
         $thispage       = [
             'title'   => 'مدیریت منو سایت',
             'list'    => 'لیست منو سایت',
@@ -69,39 +70,35 @@ class MenusiteController extends Controller
     {
         try {
 
-            $menu_panel = new Menupanel();
-            $menu_panel->title        = $request->input('title');
-            $menu_panel->label        = $request->input('label');
-            //$menu_panel->icon         = $request->input('icon');
-            $menu_panel->submenu      = $request->input('submenu');
-            $menu_panel->class        = $request->input('class');
-            $menu_panel->controller   = $request->input('controller');
-            $menu_panel->user_id      = 1;
-            $menu_panel->status       = $request->input('status');
+            $menus = new Menu();
+            $menus->title        = $request->input('title');
+            $menus->tab_title    = $request->input('tab_title');
+            $menus->page_title   = $request->input('page_title');
+            $menus->submenu      = $request->input('submenu');
+            $menus->class        = $request->input('class');
+            $menus->controller   = $request->input('controller');
+            $menus->status       = $request->input('status');
+            $menus->home_show    = $request->input('home_show');
+            $menus->keyword      = $request->input('keyword');
+            $menus->description  = $request->input('description');
+            $menus->user_id      = Auth::user()->id;
 
-            $result1 = $menu_panel->save();
 
-            $permission = new Permission();
-            $permission->title          = $request->input('title');
-            $permission->label          = $request->input('label');
-            $permission->menu_panel_id  = $menu_panel->id;
-            $permission->user_id        = 1;
+            $result1 = $menus->save();
 
-            $result2 = $permission->save();
-
-            if ($result1 == true  && $result2 == true) {
+            if ($result1 == true) {
                 $success = true;
                 $flag    = 'success';
                 $subject = 'عملیات موفق';
                 $message = 'اطلاعات منو با موفقیت ثبت شد';
             }
-            elseif($result1 == true  && $result2 != true) {
+            elseif($result1 == true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';
                 $message = 'اطلاعات دسترسی ثبت نشد، لطفا مجددا تلاش نمایید';
             }
-            elseif($result1 != true  && $result2 != true) {
+            elseif($result1 != true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';
@@ -127,21 +124,24 @@ class MenusiteController extends Controller
     public function update(Request $request)
     {
 
-        $menu_panel = MenuPanel::findOrfail($request->input('id'));
-        $menu_panel->title        = $request->input('title');
-        $menu_panel->label        = $request->input('label');
-        //$menu_panel->icon         = $request->input('icon');
-        $menu_panel->submenu      = $request->input('submenu');
-        $menu_panel->class        = $request->input('class');
-        $menu_panel->controller   = $request->input('controller');
-        $menu_panel->user_id      = 1;
-        $menu_panel->status       = $request->input('status');
+        $menu = Menu::findOrfail($request->input('id'));
+        $menu->title        = $request->input('title');
+        $menu->tab_title    = $request->input('tab_title');
+        $menu->page_title   = $request->input('page_title');
+        $menu->submenu      = $request->input('submenu');
+        $menu->class        = $request->input('class');
+        $menu->controller   = $request->input('controller');
+        $menu->status       = $request->input('status');
+        $menu->home_show    = $request->input('home_show');
+        $menu->keyword      = $request->input('keyword');
+        $menu->description  = $request->input('description');
+        $menu->user_id      = Auth::user()->id;
 //        if ($request->input('userlevel')){
 //            $menu->userlevel        = json_encode(explode("،", $request->input('userlevel')));
 //        }
 //        $menu->priority         = $request->input('priority');
 
-        $result = $menu_panel->update();
+        $result = $menu->update();
         try{
             if ($result == true) {
                 $success = true;
@@ -171,25 +171,21 @@ class MenusiteController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $menu = MenuPanel::findOrfail($request->input('id'));
+            $menu = Menu::findOrfail($request->input('id'));
             $result1 = $menu->delete();
 
-            $permission = Permission::whereMenu_panel_id($request->input('id'))->first();
-            $result2 = $permission->delete();
-
-
-            if ($result1 == true  && $result2 == true) {
+            if ($result1 == true) {
                 $success = true;
                 $flag = 'success';
                 $subject = 'عملیات موفق';
                 $message = 'اطلاعات با موفقیت پاک شد';
-            }elseif($result1 == true  && $result2 != true) {
+            }elseif($result1 == true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';
                 $message = 'اطلاعات دسترسی ثبت نشد، لطفا مجددا تلاش نمایید';
             }
-            elseif($result1 != true  && $result2 != true) {
+            elseif($result1 != true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';

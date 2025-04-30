@@ -65,16 +65,36 @@
                         {{csrf_field()}}
                         <div class="row mb-3">
                             <div class="col-md-4">
-                                <label class="form-label">نام  زیر صفحه</label>
-                                <input type="text" name="title" id="title" data-required="1" placeholder="نام زیر صفحه را وارد کنید" class="form-control" />
+                                <label class="form-label">عنوان صفحه</label>
+                                <input type="text" name="title" id="title" data-required="1" placeholder="عنوان صفحه را وارد کنید" class="form-control" />
                             </div>
+                            <div class="col-md-4">
+                                <label class="form-label">عنوان تب صفحه</label>
+                                <input type="text" name="tab_title" id="tab_title" data-required="1" placeholder="عنوان تب صفحه را وارد کنید" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">عنوان درود صفحه</label>
+                                <input type="text" name="page_title" id="page_title" data-required="1" placeholder="عنوان درود صفحه را وارد کنید" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-md-4">
                                 <label class="form-label">انتخاب صفحه</label>
                                 <select name="menu_id" id="menu_id" class="form-control select-lg select2">
                                     <option value="" selected>انتخاب کنید</option>
                                     @foreach($menus as $menu)
+                                        @if($menu->submenu == 1)
                                         <option value="{{$menu->id}}">{{$menu->title}}</option>
+                                        @endif
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">نمایش/عدم نمایش</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="" selected>انتخاب کنید</option>
+                                    <option value="4" >نمایش</option>
+                                    <option value="0" >عدم نمایش</option>
                                 </select>
                             </div>
                         </div>
@@ -87,13 +107,17 @@
                                 <label class="form-label">کنترلر داشبورد</label>
                                 <input type="text" name="controller" id="controller" data-required="1" placeholder="کلاس زیر صفحه را وارد کنید" class="form-control" />
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label">نمایش/عدم نمایش</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option value="" selected>انتخاب کنید</option>
-                                    <option value="4" >نمایش</option>
-                                    <option value="0" >عدم نمایش</option>
-                                </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">کلمات کلیدی</label>
+                                <input type="text" name="keyword" id="keyword" data-required="1" placeholder="کلمات کلیدی را وارد کنید" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">توضیحات صفحه</label>
+                                <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="text-end">
@@ -119,16 +143,35 @@
                             <input type="hidden" name="menu_id" id="menu_id_{{$submenu->id}}" value="{{$submenu->id}}" />
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label class="form-label">نام  زیر صفحه</label>
+                                    <label class="form-label">عنوان صفحه</label>
                                     <input type="text" name="title" id="title_{{$submenu->id}}" value="{{$submenu->title}}" class="form-control" />
                                 </div>
                                 <div class="col-md-4">
+                                    <label class="form-label">عنوان تب صفحه</label>
+                                    <input type="text" name="tab_title" id="tab_title_{{$submenu->id}}" value="{{$submenu->tab_title}}" data-required="1"  class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">عنوان در صفحه</label>
+                                    <input type="text" name="page_title" id="page_title_{{$submenu->id}}" value="{{$submenu->page_title}}" data-required="1"  class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
                                     <label class="form-label">انتخاب صفحه</label>
-                                    <select name="menu_id" id="menu_id_{{$submenu->id}}" class="form-control select-lg select2">
+                                    <select name="menuid" id="menuid_{{$submenu->id}}" class="form-control select-lg select2">
                                         <option value="">انتخاب صفحه</option>
                                         @foreach($menus as $menu)
+                                            @if($menu->submenu == 1)
                                             <option value="{{$menu->id}}" {{$submenu->menu_id == $menu->id ? 'selected' : '' }}>{{$menu->title}}</option>
+                                            @endif
                                         @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">وضعیت نمایش</label>
+                                    <select name="status" id="status_{{$submenu->id}}" class="form-control">
+                                        <option value="4" {{$submenu->status == 4 ? 'selected' : '' }} >نمایش</option>
+                                        <option value="0" {{$submenu->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
                                     </select>
                                 </div>
                             </div>
@@ -141,12 +184,17 @@
                                     <label class="form-label">کنترلر داشبورد</label>
                                     <input type="text" name="controller" id="controller_{{$submenu->id}}"  value="{{$submenu->controller}}" class="form-control" />
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">نمایش/عدم نمایش</label>
-                                    <select name="status" id="status_{{$submenu->id}}" class="form-control">
-                                        <option value="4" {{$submenu->status == 4 ? 'selected' : '' }}>نمایش</option>
-                                        <option value="0" {{$submenu->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
-                                    </select>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label class="form-label">کلمات کلیدی</label>
+                                    <input type="text" name="keyword" id="keyword_{{$submenu->id}}" value="{{$submenu->keyword}}" data-required="1" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label class="form-label">توضیحات صفحه</label>
+                                    <textarea name="description" id="description_{{$submenu->id}}" cols="30" rows="10" class="form-control">{{$submenu->description}}</textarea>
                                 </div>
                             </div>
                             <div class="text-end">
@@ -208,11 +256,15 @@
                     data: {
                         "_token"    : "{{ csrf_token() }}",
                         title       : jQuery('#title').val(),
+                        tab_title   : jQuery('#tab_title').val(),
+                        page_title  : jQuery('#page_title').val(),
                         menu_id     : jQuery('#menu_id').val(),
                         class       : jQuery('#class').val(),
                         controller  : jQuery('#controller').val(),
                         submenu     : jQuery('#submenu').val(),
-                        status      : jQuery('#status').val()
+                        status      : jQuery('#status').val(),
+                        keyword     : jQuery('#keyword').val(),
+                        description : jQuery('#description').val(),
                     },
                     success: function (data) {
                         if(data.success == true){
@@ -258,14 +310,18 @@
                     url: "{{ route(request()->segment(2).'.update' , 0) }}",
                     method: 'PATCH',
                     data: {
-                        "_token"        : "{{ csrf_token() }}",
-                        id              : jQuery('#menu_id_' + id).val(),
-                        menu_id         : jQuery('#menu_id_' + id).val(),
-                        title           : jQuery('#title_' + id).val(),
-                        class           : jQuery('#class_' + id).val(),
-                        controller      : jQuery('#controller_' + id).val(),
-                        submenu         : jQuery('#submenu_' + id).val(),
-                        status          : jQuery('#status_' + id).val()
+                        "_token"    : "{{ csrf_token() }}",
+                        id          : jQuery('#menu_id_' + id).val(),
+                        title       : jQuery('#title_' + id).val(),
+                        tab_title   : jQuery('#tab_title_' + id).val(),
+                        page_title  : jQuery('#page_title_' + id).val(),
+                        menu_id     : jQuery('#menuid_' + id).val(),
+                        class       : jQuery('#class_' + id).val(),
+                        controller  : jQuery('#controller_' + id).val(),
+                        submenu     : jQuery('#submenu_' + id).val(),
+                        status      : jQuery('#status_' + id).val(),
+                        keyword     : jQuery('#keyword_' + id).val(),
+                        description : jQuery('#description_' + id).val(),
                     },
                     success: function (data) {
                         if(data.success == true){

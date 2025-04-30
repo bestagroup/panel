@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use App\Models\MenuPanel;
 use App\Models\Permission;
+use App\Models\Submenu;
 use App\Models\SubmenuPanel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubmenusiteController extends Controller
@@ -14,8 +17,12 @@ class SubmenusiteController extends Controller
     public function index(Request $request)
     {
 
-        $submenupanels = SubmenuPanel::select('id','priority','title','label','menu_id','slug','status','class','controller')->get();
-        $menupanels = Menupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+        $submenupanels  = SubmenuPanel::select('id','priority','title','label','menu_id','slug','status','class','controller')->get();
+        $menupanels     = Menupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller')->get();
+        $menus          = Menu::all();
+        $submenus       = Submenu::join('menus' , 'menus.id' , '=' , 'submenus.menu_id')
+            ->select('menus.title as menu','submenus.menu_id','submenus.id','submenus.title','submenus.tab_title','submenus.page_title','submenus.slug','submenus.status','submenus.class','submenus.controller')
+            ->get();
         $thispage       = [
             'title'   => 'مدیریت زیر صفحه سایت',
             'list'    => 'لیست زیر صفحه سایت',
@@ -27,8 +34,8 @@ class SubmenusiteController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = SubmenuPanel::join('menu_panels' , 'menu_panels.id' , '=' , 'submenu_panels.menu_id')
-                ->select('menu_panels.label as menu','submenu_panels.id','submenu_panels.title','submenu_panels.label','submenu_panels.slug','submenu_panels.status','submenu_panels.class','submenu_panels.controller')
+            $data = Submenu::join('menus' , 'menus.id' , '=' , 'submenus.menu_id')
+                ->select('menus.title as menu','submenus.id','submenus.title','submenus.slug','submenus.status','submenus.class','submenus.controller')
                 ->get();
             return Datatables::of($data)
                 ->addColumn('id', function ($data) {
@@ -36,9 +43,6 @@ class SubmenusiteController extends Controller
                 })
                 ->addColumn('title', function ($data) {
                     return ($data->title);
-                })
-                ->addColumn('label', function ($data) {
-                    return ($data->label);
                 })
                 ->addColumn('slug', function ($data) {
                     return ($data->slug);
@@ -67,45 +71,38 @@ class SubmenusiteController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.submenusite')->with(compact(['thispage' , 'submenupanels' , 'menupanels']));
+        return view('panel.submenusite')->with(compact(['thispage' , 'submenupanels' , 'menupanels' , 'submenus' , 'menus']));
     }
 
     public function store(Request $request)
     {
         try {
 
-            $submenu_panel = new SubmenuPanel();
-            $submenu_panel->title        = $request->input('title');
-            $submenu_panel->label        = $request->input('label');
-            $submenu_panel->menu_id      = $request->input('menupanel_id');
-            $submenu_panel->class        = $request->input('class');
-            $submenu_panel->controller   = $request->input('controller');
-            $submenu_panel->user_id      = 1;
-            $submenu_panel->status       = $request->input('status');
+            $submenus = new Submenu();
+            $submenus->title        = $request->input('title');
+            $submenus->tab_title    = $request->input('tab_title');
+            $submenus->page_title   = $request->input('page_title');
+            $submenus->menu_id      = $request->input('menu_id');
+            $submenus->class        = $request->input('class');
+            $submenus->controller   = $request->input('controller');
+            $submenus->user_id      = Auth::user()->id;
+            $submenus->status       = $request->input('status');
 
-            $result1 = $submenu_panel->save();
+            $result1 = $submenus->save();
 
-            $permission = new Permission();
-            $permission->title          = $request->input('title');
-            $permission->label          = $request->input('label');
-            $permission->submenu_panel_id  = $submenu_panel->id;
-            $permission->user_id        = 1;
-
-            $result2 = $permission->save();
-
-            if ($result1 == true  && $result2 == true) {
+            if ($result1 == true) {
                 $success = true;
                 $flag    = 'success';
                 $subject = 'عملیات موفق';
                 $message = 'اطلاعات زیرمنو با موفقیت ثبت شد';
             }
-            elseif($result1 == true  && $result2 != true) {
+            elseif($result1 == true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';
                 $message = 'اطلاعات دسترسی ثبت نشد، لطفا مجددا تلاش نمایید';
             }
-            elseif($result1 != true  && $result2 != true) {
+            elseif($result1 != true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';
@@ -131,20 +128,21 @@ class SubmenusiteController extends Controller
     public function update(Request $request)
     {
 
-        $submenu_panel = SubmenuPanel::findOrfail($request->input('id'));
-        $submenu_panel->title        = $request->input('title');
-        $submenu_panel->label        = $request->input('label');
-        $submenu_panel->menu_id      = $request->input('menupanel_id');
-        $submenu_panel->class        = $request->input('class');
-        $submenu_panel->controller   = $request->input('controller');
-        $submenu_panel->user_id      = 1;
-        $submenu_panel->status       = $request->input('status');
+        $submenu = Submenu::findOrfail($request->input('id'));
+        $submenu->title        = $request->input('title');
+        $submenu->tab_title    = $request->input('tab_title');
+        $submenu->page_title   = $request->input('page_title');
+        $submenu->menu_id      = $request->input('menu_id');
+        $submenu->class        = $request->input('class');
+        $submenu->controller   = $request->input('controller');
+        $submenu->user_id      = 1;
+        $submenu->status       = $request->input('status');
 //        if ($request->input('userlevel')){
 //            $menu->userlevel        = json_encode(explode("،", $request->input('userlevel')));
 //        }
 //        $menu->priority         = $request->input('priority');
 
-        $result = $submenu_panel->update();
+        $result = $submenu->update();
         try{
             if ($result == true) {
                 $success = true;
@@ -174,25 +172,22 @@ class SubmenusiteController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $submenu = SubmenuPanel::findOrfail($request->input('id'));
+            $submenu = Submenu::findOrfail($request->input('id'));
             $result1 = $submenu->delete();
 
-            $permission = Permission::whereSubmenu_panel_id($request->input('id'))->first();
-            $result2 = $permission->delete();
 
-
-            if ($result1 == true  && $result2 == true) {
+            if ($result1 == true) {
                 $success = true;
                 $flag = 'success';
                 $subject = 'عملیات موفق';
                 $message = 'اطلاعات با موفقیت پاک شد';
-            }elseif($result1 == true  && $result2 != true) {
+            }elseif($result1 == true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';
                 $message = 'اطلاعات دسترسی ثبت نشد، لطفا مجددا تلاش نمایید';
             }
-            elseif($result1 != true  && $result2 != true) {
+            elseif($result1 != true) {
                 $success = false;
                 $flag    = 'error';
                 $subject = 'عملیات نا موفق';

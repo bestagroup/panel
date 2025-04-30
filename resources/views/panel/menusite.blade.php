@@ -68,10 +68,34 @@
                                 <input type="text" name="title" id="title" data-required="1" placeholder="عنوان صفحه را وارد کنید" class="form-control" />
                             </div>
                             <div class="col-md-4">
+                                <label class="form-label">عنوان تب صفحه</label>
+                                <input type="text" name="tab_title" id="tab_title" data-required="1" placeholder="عنوان تب صفحه را وارد کنید" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">عنوان درود صفحه</label>
+                                <input type="text" name="page_title" id="page_title" data-required="1" placeholder="عنوان درود صفحه را وارد کنید" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
                                 <label class="form-label">زیرصفحه</label>
                                 <select name="submenu" id="submenu" class="form-control">
                                     <option value="1" selected>دارد</option>
                                     <option value="0">ندارد</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">نمایش در صفحه اصلی</label>
+                                <select name="home_show" id="home_show" class="form-control">
+                                    <option value="1" selected>دارد</option>
+                                    <option value="0">ندارد</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">وضعیت نمایش</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="4" >نمایش</option>
+                                    <option value="0" >عدم نمایش</option>
                                 </select>
                             </div>
                         </div>
@@ -84,12 +108,17 @@
                                 <label class="form-label">کنترلر صفحه</label>
                                 <input type="text" name="controller" id="controller" data-required="1" placeholder="کلاس منو داشبورد را وارد کنید" class="form-control" />
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label">نمایش/عدم نمایش</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option value="4" >نمایش</option>
-                                    <option value="0" >عدم نمایش</option>
-                                </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">کلمات کلیدی</label>
+                                <input type="text" name="keyword" id="keyword" data-required="1" placeholder="کلمات کلیدی را وارد کنید" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">توضیحات صفحه</label>
+                                <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="text-end">
@@ -114,16 +143,39 @@
                         {{csrf_field()}}
                         <input type="hidden" name="menu_id" id="menu_id_{{$menu->id}}" value="{{$menu->id}}" />
                         <div class="row mb-3">
-
                             <div class="col-md-4">
                                 <label class="form-label">عنوان صفحه</label>
                                 <input type="text" name="title" id="title_{{$menu->id}}" value="{{$menu->title}}" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">زیر صفحه</label>
+                                <label class="form-label">عنوان تب صفحه</label>
+                                <input type="text" name="tab_title" id="tab_title_{{$menu->id}}" value="{{$menu->tab_title}}" data-required="1"  class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">عنوان درود صفحه</label>
+                                <input type="text" name="page_title" id="page_title_{{$menu->id}}" value="{{$menu->page_title}}" data-required="1"  class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">زیرصفحه</label>
                                 <select name="submenu" id="submenu_{{$menu->id}}" class="form-control">
                                     <option value="1" {{$menu->submenu == 1 ? 'selected' : '' }} >دارد</option>
                                     <option value="0" {{$menu->submenu == 0 ? 'selected' : '' }}>ندارد</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">نمایش در صفحه اصلی</label>
+                                <select name="home_show" id="home_show_{{$menu->id}}" class="form-control">
+                                    <option value="1" {{$menu->home_show == 1 ? 'selected' : '' }} >دارد</option>
+                                    <option value="0" {{$menu->home_show == 0 ? 'selected' : '' }}>ندارد</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">وضعیت نمایش</label>
+                                <select name="status" id="status_{{$menu->id}}" class="form-control">
+                                    <option value="4" {{$menu->status == 4 ? 'selected' : '' }} >نمایش</option>
+                                    <option value="0" {{$menu->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
                                 </select>
                             </div>
                         </div>
@@ -132,17 +184,21 @@
                                 <label class="form-label">کلاس داشبورد</label>
                                 <input type="text" name="class" id="class_{{$menu->id}}" value="{{$menu->class}}"  class="form-control" />
                             </div>
-
                             <div class="col-md-4">
                                 <label class="form-label">کنترلر داشبورد</label>
                                 <input type="text" name="controller" id="controller_{{$menu->id}}"  value="{{$menu->controller}}" class="form-control" />
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label">نمایش/عدم نمایش</label>
-                                <select name="status" id="status_{{$menu->id}}" class="form-control">
-                                    <option value="4" {{$menu->status == 4 ? 'selected' : '' }}>نمایش</option>
-                                    <option value="0" {{$menu->status == 0 ? 'selected' : '' }}>عدم نمایش</option>
-                                </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">کلمات کلیدی</label>
+                                <input type="text" name="keyword" id="keyword_{{$menu->id}}" value="{{$menu->keyword}}" data-required="1" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">توضیحات صفحه</label>
+                                <textarea name="description" id="description_{{$menu->id}}" cols="30" rows="10" class="form-control">{{$menu->description}}</textarea>
                             </div>
                         </div>
                         <div class="text-end">
@@ -206,10 +262,15 @@
                     data: {
                         "_token"    : "{{ csrf_token() }}",
                         title       : jQuery('#title').val(),
+                        tab_title   : jQuery('#tab_title').val(),
+                        page_title  : jQuery('#page_title').val(),
                         class       : jQuery('#class').val(),
                         controller  : jQuery('#controller').val(),
                         submenu     : jQuery('#submenu').val(),
-                        status      : jQuery('#status').val()
+                        status      : jQuery('#status').val(),
+                        home_show   : jQuery('#home_show').val(),
+                        keyword     : jQuery('#keyword').val(),
+                        description : jQuery('#description').val(),
                     },
                     success: function (data) {
                         if(data.success == true){
@@ -256,13 +317,18 @@
                     url: "{{ route(request()->segment(2).'.update' , 0) }}",
                     method: 'PATCH',
                     data: {
-                        "_token"        : "{{ csrf_token() }}",
-                        id              : jQuery('#menu_id_' + id).val(),
-                        title           : jQuery('#title_' + id).val(),
-                        class           : jQuery('#class_' + id).val(),
-                        controller      : jQuery('#controller_' + id).val(),
-                        submenu         : jQuery('#submenu_' + id).val(),
-                        status          : jQuery('#status_' + id).val()
+                        "_token"    : "{{ csrf_token() }}",
+                        id          : jQuery('#menu_id_' + id).val(),
+                        title       : jQuery('#title_' + id).val(),
+                        tab_title   : jQuery('#tab_title_' + id).val(),
+                        page_title  : jQuery('#page_title_' + id).val(),
+                        class       : jQuery('#class_' + id).val(),
+                        controller  : jQuery('#controller_' + id).val(),
+                        submenu     : jQuery('#submenu_' + id).val(),
+                        status      : jQuery('#status_' + id).val(),
+                        home_show   : jQuery('#home_show_' + id).val(),
+                        keyword     : jQuery('#keyword_' + id).val(),
+                        description : jQuery('#description_' + id).val(),
                     },
                     success: function (data) {
                         if(data.success == true){
