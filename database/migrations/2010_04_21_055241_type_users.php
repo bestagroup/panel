@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id()->comment('شناسه یکتا نوع کاربر');
             $table->string('title')->comment('عنوان نوع کاربر به انگلیسی ');
             $table->string('title_fa')->nullable()->comment('عنوان نوع کاربر به فارسی یا نمایش در UI');
+            $table->boolean('status')->default(0)->comment('وضعیت منو (فعال/غیرفعال)');
             $table->timestamps();
         });
 

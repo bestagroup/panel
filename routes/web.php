@@ -5,12 +5,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(function () {
-    Route::get('dashboard'       , 'IndexController@index')->name('dashboard');
+    Route::get('dashboard'                 , 'IndexController@index')->name('dashboard');
     Route::resource('panel/owner'        , 'OwnerController');
     Route::resource('panel/menupanel'    , 'MenupanelController');
     Route::resource('panel/submenupanel' , 'SubmenupanelController');
     Route::resource('panel/menusite'     , 'MenusiteController');
     Route::resource('panel/submenusite'  , 'SubmenusiteController');
+    Route::resource('panel/typeuser'     , 'TypeuserController');
 });
 
 //Route::middleware(['panel.access:panel'])->prefix('panel')->group(function () {
