@@ -1,6 +1,5 @@
 @extends('layouts.base')
-
-@section('title', 'مدیریت نوع کاربران')
+@section('title', 'مدیریت نقش کاربران سایت')
 <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css') }}"/>
 @section('content')
     <div class="card">

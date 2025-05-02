@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'مدیریت نوع کاربران')
+@section('title', 'مدیریت نقش کاربران داشبورد')
 <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css') }}"/>
 @section('content')
     <div class="card">
@@ -15,10 +15,10 @@
                 <table id="sample1" class="table table-striped table-bordered yajra-datatable">
                     <thead>
                     <tr class="table-light">
-                        <th>نام کاربر</th>
-                        <th>عنوان نقش</th>
-                        <th>وضعیت</th>
-                        <th>تغییر</th>
+                        <th> نام کاربر </th>
+                        <th> نقش کاربر </th>
+                        <th> وضعیت </th>
+                        <th> تغییر </th>
                     </tr>
                     </thead>
                     <tbody>

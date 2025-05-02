@@ -12,6 +12,8 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/menusite'     , 'MenusiteController');
     Route::resource('panel/submenusite'  , 'SubmenusiteController');
     Route::resource('panel/typeuser'     , 'TypeuserController');
+    Route::resource('panel/siteuser'     , 'SiteuserController');
+    Route::resource('panel/paneluser'    , 'PaneluserController');
 });
 
 //Route::middleware(['panel.access:panel'])->prefix('panel')->group(function () {
