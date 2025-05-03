@@ -16,7 +16,7 @@
                     <thead>
                     <tr class="table-light">
                         <th>عنوان فارسی</th>
-                        <th>عنوان</th>
+                        <th>عنوان انگلیسی</th>
                         <th>وضعیت</th>
                         <th>تغییر</th>
                     </tr>
@@ -65,7 +65,7 @@
                                 <input type="text" name="title_fa" id="title_fa" data-required="1" placeholder="عنوان فارسی را وارد کنید" class="form-control" />
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">عنوان</label>
+                                <label class="form-label">عنوان انگلیسی</label>
                                 <input type="text" name="title" id="title" data-required="1" placeholder="عنوان را وارد کنید" class="form-control" />
                             </div>
                             <div class="col-md-4">
@@ -104,7 +104,7 @@
                                     <input type="text" name="title_fa" id="title_fa_{{$role->id}}" value="{{$role->title_fa}}" class="form-control" />
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label">عنوان </label>
+                                    <label class="form-label">عنوان انگلیسی</label>
                                     <input type="text" name="title" id="title_{{$role->id}}" value="{{$role->title}}" class="form-control" />
                                 </div>
                                 <div class="col-md-4">
@@ -152,6 +152,7 @@
 
         });
     </script>
+
     <script>
         jQuery(document).ready(function(){
             jQuery('#submit').click(function(e){
@@ -198,6 +199,7 @@
             });
         });
     </script>
+
     <script>
         jQuery(document).ready(function(){
             jQuery('[id^=editsubmit_]').click(function(e){
@@ -244,6 +246,7 @@
             });
         });
     </script>
+
     <script>
         jQuery(document).ready(function(){
             jQuery('[id^=deletesubmit_]').click(function(e){

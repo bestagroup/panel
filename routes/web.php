@@ -15,6 +15,8 @@ Route::middleware('admin')->namespace('App\Http\Controllers\Panel')->group(funct
     Route::resource('panel/siteuser'     , 'SiteuserController');
     Route::resource('panel/paneluser'    , 'PaneluserController');
     Route::resource('panel/roleuser'     , 'RoleuserController');
+    Route::resource('panel/leveluser'     , 'LeveluserController');
+    Route::resource('panel/useraccess'     , 'UseraccessController');
 });
 
 //Route::middleware(['panel.access:panel'])->prefix('panel')->group(function () {
@@ -45,27 +47,28 @@ Route::get('/toggle-theme', function () {
 
 Auth::routes();
 
-Route::view('/panel/brand-management'           , 'panel.brand_management')         ->name('panel.brand_management');
-Route::view('/panel/profile-view'               , 'panel.profile_view')             ->name('panel.profile_view');
-Route::view('/panel/site-users'                 , 'panel.site_users')               ->name('panel.site_users');
-Route::view('/panel/notifications-management'   , 'panel.notifications_management') ->name('panel.notifications_management');
-Route::view('/panel/payments-management'        , 'panel.payments_management')      ->name('panel.payments_management');
-Route::view('/panel/site-menu-management'       , 'panel.site_menu_management')     ->name('panel.site_menu_management');
-Route::view('/panel/submenu-management'         , 'panel.submenu_management')       ->name('panel.submenu_management');
-Route::view('/panel/slides-management'          , 'panel.slides_management')        ->name('panel.slides_management');
-Route::view('/panel/customers-management'       , 'panel.customers_management')     ->name('panel.customers_management');
-Route::view('/panel/news-events-management'     , 'panel.news_events_management')   ->name('panel.news_events_management');
-Route::view('/panel/faq-management'             , 'panel.faq_management')           ->name('panel.faq_management');
-Route::view('/panel/employees-management'       , 'panel.employees_management')     ->name('panel.employees_management');
-Route::view('/panel/consulting-requests'        , 'panel.consulting_requests')      ->name('panel.consulting_requests');
-Route::view('/panel/inquiries-management'       , 'panel.inquiries_management')     ->name('panel.inquiries_management');
-Route::view('/panel/inquiry-fields'             , 'panel.inquiry_fields')           ->name('panel.inquiry_fields');
-Route::view('/panel/posts-management'           , 'panel.posts_management')         ->name('panel.posts_management');
-Route::view('/panel/educational-files'          , 'panel.educational_files')        ->name('panel.educational_files');
-Route::view('/panel/courses-management'         , 'panel.courses_management')       ->name('panel.courses_management');
-Route::view('/panel/media-management'           , 'panel.media_management')         ->name('panel.media_management');
-Route::view('/panel/discounts-management'       , 'panel.discounts_management')     ->name('panel.discounts_management');
-Route::view('/panel/file-management'            , 'panel.file_management')          ->name('panel.file_management');
+//Route::view('/panel/brand-management'           , 'panel.brand_management')         ->name('panel.brand_management');
+//Route::view('/panel/profile-view'               , 'panel.profile_view')             ->name('panel.profile_view');
+//Route::view('/panel/site-users'                 , 'panel.site_users')               ->name('panel.site_users');
+//Route::view('/panel/notifications-management'   , 'panel.notifications_management') ->name('panel.notifications_management');
+//Route::view('/panel/payments-management'        , 'panel.payments_management')      ->name('panel.payments_management');
+//Route::view('/panel/site-menu-management'       , 'panel.site_menu_management')     ->name('panel.site_menu_management');
+//Route::view('/panel/submenu-management'         , 'panel.submenu_management')       ->name('panel.submenu_management');
+//Route::view('/panel/slides-management'          , 'panel.slides_management')        ->name('panel.slides_management');
+//Route::view('/panel/customers-management'       , 'panel.customers_management')     ->name('panel.customers_management');
+//Route::view('/panel/news-events-management'     , 'panel.news_events_management')   ->name('panel.news_events_management');
+//Route::view('/panel/faq-management'             , 'panel.faq_management')           ->name('panel.faq_management');
+//Route::view('/panel/employees-management'       , 'panel.employees_management')     ->name('panel.employees_management');
+//Route::view('/panel/consulting-requests'        , 'panel.consulting_requests')      ->name('panel.consulting_requests');
+//Route::view('/panel/inquiries-management'       , 'panel.inquiries_management')     ->name('panel.inquiries_management');
+//Route::view('/panel/inquiry-fields'             , 'panel.inquiry_fields')           ->name('panel.inquiry_fields');
+//Route::view('/panel/posts-management'           , 'panel.posts_management')         ->name('panel.posts_management');
+//Route::view('/panel/educational-files'          , 'panel.educational_files')        ->name('panel.educational_files');
+//Route::view('/panel/courses-management'         , 'panel.courses_management')       ->name('panel.courses_management');
+//Route::view('/panel/media-management'           , 'panel.media_management')         ->name('panel.media_management');
+//Route::view('/panel/discounts-management'       , 'panel.discounts_management')     ->name('panel.discounts_management');
+//Route::view('/panel/file-management'            , 'panel.file_management')          ->name('panel.file_management');
+//Route::view('/panel/file-management'            , 'panel.file_management')          ->name('panel.file_management');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

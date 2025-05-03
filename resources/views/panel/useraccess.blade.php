@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'مدیریت نقش‌های داشبورد')
+@section('title', 'مدیریت دسترسی های داشبورد')
 
 @push('head')
     <link rel="stylesheet" href="{{ asset('https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css') }}" />
@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="card-title mb-0">لیست نقش های داشبورد</h5>
+                <h5 class="card-title mb-0">لیست دسترسی های داشبورد</h5>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoleModal">+ افزودن نقش داشبورد</button>
             </div>
 
@@ -130,7 +130,7 @@
             // راه‌اندازی دیتاتیبل با زبان فارسی
             const table = new DataTable('#rolesTable', {
                 language: {
-                    url: "//cdn.datatables.net/plug-ins/1.13.5/i18n/fa.json"
+                    url: "https://cdn.datatables.net/plug-ins/1.13.5/i18n/fa.json"
                 },
                 responsive: true,
                 pageLength: 10

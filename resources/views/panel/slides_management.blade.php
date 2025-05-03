@@ -232,6 +232,7 @@
             });
         });
     </script>
+
     <script>
         function selectFile(url, event) {
             event.preventDefault();
@@ -257,5 +258,6 @@
             fileManager.show();
         }
     </script>
+
 @endpush
 
