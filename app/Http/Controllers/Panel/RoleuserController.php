@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Models\MenuPanel;
 use App\Models\Permission;
+use App\Models\Role;
 use App\Models\SubmenuPanel;
 use App\Models\TypeUser;
 use Illuminate\Http\Request;
@@ -14,10 +15,9 @@ class RoleuserController extends Controller
 {
     public function index(Request $request)
     {
-
         $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'submenu' , 'class' , 'controller')->get();
         $submenupanels  = Submenupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
-        $typeusers  = TypeUser::all();
+        $roles          = Role::all();
         $thispage       = [
             'title'   => 'مدیریت  نقش ',
             'list'    => 'لیست  نقش ',
@@ -29,7 +29,7 @@ class RoleuserController extends Controller
         ];
 
         if ($request->ajax()) {
-            $data = TypeUser::all();
+            $data = Role::all();
 
             return Datatables::of($data)
                 ->addColumn('title_fa', function ($data) {
@@ -40,9 +40,9 @@ class RoleuserController extends Controller
                 })
                 ->addColumn('status', function ($data) {
                     if ($data->status == "0") {
-                        return "عدم نمایش";
+                        return "غیر فعال";
                     } elseif ($data->status == "4") {
-                        return "در حال نمایش";
+                        return "فعال";
                     }
                 })
                 ->editColumn('action', function ($data) {
@@ -53,19 +53,19 @@ class RoleuserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.roleuser')->with(compact(['thispage' , 'menupanels' , 'submenupanels' , 'typeusers']));
+        return view('panel.roleuser')->with(compact(['thispage' , 'menupanels' , 'submenupanels' , 'roles']));
     }
 
     public function store(Request $request)
     {
         try {
 
-            $typeuser = new TypeUser();
-            $typeuser->title_fa     = $request->input('title_fa');
-            $typeuser->title        = $request->input('title');
-            $typeuser->status       = $request->input('status');
+            $role = new Role();
+            $role->title_fa     = $request->input('title_fa');
+            $role->title        = $request->input('title');
+            $role->status       = $request->input('status');
 
-            $result1 = $typeuser->save();
+            $result1 = $role->save();
 
             if ($result1 == true) {
                 $success = true;
@@ -95,21 +95,18 @@ class RoleuserController extends Controller
             $message = 'اطلاعات منو ثبت نشد،لطفا بعدا مجدد تلاش نمایید ';
         }
 
-
         return response()->json(['success'=>$success , 'subject' => $subject, 'flag' => $flag, 'message' => $message]);
-
-//        return redirect(route('menudashboards.index'));
 
     }
 
     public function update(Request $request)
     {
 
-        $typeuser = TypeUser::findOrfail($request->input('id'));
-        $typeuser->title_fa     = $request->input('title_fa');
-        $typeuser->title        = $request->input('title');
-        $typeuser->status       = $request->input('status');
-        $result = $typeuser->update();
+        $role = Role::findOrfail($request->input('id'));
+        $role->title_fa     = $request->input('title_fa');
+        $role->title        = $request->input('title');
+        $role->status       = $request->input('status');
+        $result = $role->update();
         try{
             if ($result == true) {
                 $success = true;
@@ -139,8 +136,8 @@ class RoleuserController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $typeuser = TypeUser::findOrfail($request->input('id'));
-            $result1 = $typeuser->delete();
+            $role = Role::findOrfail($request->input('id'));
+            $result1 = $role->delete();
 
             if ($result1 == true) {
                 $success = true;

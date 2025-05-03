@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Site\Exception;
 use App\Models\MenuPanel;
+use App\Models\Role;
 use App\Models\SubmenuPanel;
 use App\Models\TypeUser;
 use App\Models\User;
@@ -20,10 +21,11 @@ class PaneluserController extends Controller
 
         $menupanels     = Menupanel::select('id','priority','icon', 'title','label', 'slug', 'status' , 'submenu' , 'class' , 'controller')->get();
         $submenupanels  = Submenupanel::select('id','priority', 'title','label', 'slug', 'status' , 'class' , 'controller' , 'menu_id')->get();
-        $typeusers      = TypeUser::all();
-        $users          = User::leftjoin('type_users' , 'type_users.id' , '=' , 'users.type_id')
-            ->select('users.id' , 'users.name' , 'users.email' , 'users.phone' , 'type_users.title_fa' , 'users.status' , 'users.level' , 'users.birthday' , 'users.national_id' , 'users.type_id')
-            ->where('users.level','=','admin')->get();
+        $roles          = Role::all();
+        $users          = User::select('users.id' , 'users.name' , 'users.email' , 'users.phone' , 'users.status' , 'users.level' , 'users.birthday' , 'users.national_id' , 'users.type_id' , 'roles.title_fa')
+                                ->leftjoin('role_user' , 'role_user.user_id' , '=' , 'users.id')
+                                ->leftjoin('roles' , 'roles.id' , '=' , 'role_user.role_id')
+                                ->where('users.level','=','admin')->get();
         $thispage       = [
             'title'   => 'مدیریت  کاربران داشبورد ',
             'list'    => 'لیست  کاربران داشبورد ',
@@ -67,7 +69,7 @@ class PaneluserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('panel.siteuser')->with(compact(['thispage' , 'menupanels' , 'submenupanels' , 'users' , 'typeusers']));
+        return view('panel.paneluser')->with(compact(['thispage' , 'menupanels' , 'submenupanels' , 'users' , 'roles']));
     }
 
     public function store(Request $request)

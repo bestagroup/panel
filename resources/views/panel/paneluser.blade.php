@@ -82,8 +82,8 @@
                                 <label class="form-label">نوع کاربری</label>
                                 <select name="typeuser_id" id="typeuser_id" class="form-control select-lg select2">
                                     <option value="" selected>انتخاب کنید</option>
-                                    @foreach($typeusers as $typeuser)
-                                            <option value="{{$typeuser->id}}">{{$typeuser->title_fa}}</option>
+                                    @foreach($roles as $role)
+                                            <option value="{{$role->id}}">{{$role->title_fa}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -154,8 +154,8 @@
                                     <label class="form-label">نوع کاربری</label>
                                     <select name="typeuser_id" id="typeuser_id_{{$user->id}}" class="form-control select-lg select2">
                                         <option value="" selected>انتخاب کنید</option>
-                                        @foreach($typeusers as $typeuser)
-                                            <option value="{{$typeuser->id}}" {{$user->type_id == $typeuser->id ? 'selected' : ''}}>{{$typeuser->title_fa}}</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->id}}" {{$user->type_id == $role->id ? 'selected' : ''}}>{{$role->title_fa}}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -15,10 +15,10 @@
                 <table id="sample1" class="table table-striped table-bordered yajra-datatable">
                     <thead>
                     <tr class="table-light">
-                        <th> نام کاربر </th>
-                        <th> نقش کاربر </th>
-                        <th> وضعیت </th>
-                        <th> تغییر </th>
+                        <th>عنوان فارسی</th>
+                        <th>عنوان</th>
+                        <th>وضعیت</th>
+                        <th>تغییر</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,8 +29,8 @@
     </div>
 
     <!-- Delete Modal -->
-    @foreach($typeusers as $typeuser)
-        <div class="modal fade" id="deleteModal{{$typeuser->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    @foreach($roles as $role)
+        <div class="modal fade" id="deleteModal{{$role->id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content text-center">
                     <div class="modal-header border-bottom-0">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="modal-footer justify-content-center">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">انصراف</button>
-                        <button type="button" class="btn btn-danger" id="deletesubmit_{{$typeuser->id}}" data-id="{{$typeuser->id}}">حذف</button>
+                        <button type="button" class="btn btn-danger" id="deletesubmit_{{$role->id}}" data-id="{{$role->id}}">حذف</button>
                     </div>
                 </div>
             </div>
@@ -86,38 +86,38 @@
         </div>
     </div>
     <!-- Edit Modal -->
-    @foreach($typeusers as $typeuser)
-        <div class="modal fade" id="editModal{{$typeuser->id}}" tabindex="-1" aria-labelledby="editModalLabel{{$typeuser->id}}" aria-hidden="true">
+    @foreach($roles as $role)
+        <div class="modal fade" id="editModal{{$role->id}}" tabindex="-1" aria-labelledby="editModalLabel{{$role->id}}" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel{{$typeuser->id}}">{{$thispage['edit']}}</h5>
+                        <h5 class="modal-title" id="editModalLabel{{$role->id}}">{{$thispage['edit']}}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{route(request()->segment(2).'.update' , $typeuser->id)}}" id="editform_{{$typeuser->id}}" method="POST">
+                        <form action="{{route(request()->segment(2).'.update' , $role->id)}}" id="editform_{{$role->id}}" method="POST">
                             {{csrf_field()}}
-                            <input type="hidden" name="usertype_id" id="usertype_id_{{$typeuser->id}}" value="{{$typeuser->id}}" />
+                            <input type="hidden" name="role_id" id="role_id_{{$role->id}}" value="{{$role->id}}" />
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label">عنوان فارسی</label>
-                                    <input type="text" name="title_fa" id="title_fa_{{$typeuser->id}}" value="{{$typeuser->title_fa}}" class="form-control" />
+                                    <input type="text" name="title_fa" id="title_fa_{{$role->id}}" value="{{$role->title_fa}}" class="form-control" />
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">عنوان </label>
-                                    <input type="text" name="title" id="title_{{$typeuser->id}}" value="{{$typeuser->title}}" class="form-control" />
+                                    <input type="text" name="title" id="title_{{$role->id}}" value="{{$role->title}}" class="form-control" />
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">فعال/غیر فعال</label>
-                                    <select name="status" id="status_{{$typeuser->id}}" class="form-control">
+                                    <select name="status" id="status_{{$role->id}}" class="form-control">
                                         <option value="" selected>انتخاب کنید</option>
-                                        <option value="4" {{$typeuser->status == 4 ? 'selected' : '' }}>فعال</option>
-                                        <option value="0" {{$typeuser->status == 0 ? 'selected' : '' }}>غیر فعال</option>
+                                        <option value="4" {{$role->status == 4 ? 'selected' : '' }}>فعال</option>
+                                        <option value="0" {{$role->status == 0 ? 'selected' : '' }}>غیر فعال</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="text-end">
-                                <button type="button" id="editsubmit_{{$typeuser->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
+                                <button type="button" id="editsubmit_{{$role->id}}" class="btn btn-primary" >ذخیره اطلاعات</button>
                             </div>
                         </form>
                     </div>
@@ -167,7 +167,6 @@
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
-
                 jQuery.ajax({
                     url: "{{route(request()->segment(2).'.'.'store')}}",
                     method: 'POST',
@@ -179,13 +178,11 @@
                     },
                     success: function (data) {
                         if(data.success == true){
-                            // بستن مدال
                             var modal = bootstrap.Modal.getInstance(document.querySelector('#addModal'));
                             if (modal) modal.hide();
                             $('#addform')[0].reset();
                             $('.yajra-datatable').DataTable().ajax.reload(null, false);
                             //swal(data.subject, data.message, data.flag);
-
                         } else {
                             swal(data.subject, data.message, data.flag);
                         }
@@ -206,11 +203,9 @@
             jQuery('[id^=editsubmit_]').click(function(e){
                 e.preventDefault();
                 var button = jQuery(this);
-                var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
-
+                var originalButtonHtml = button.html();
                 button.prop('disabled', true);
                 button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال ارسال...');
-
                 var id = jQuery(this).attr('id').split('_')[1];
                 $.ajaxSetup({
                     headers: {
@@ -222,20 +217,18 @@
                     method: 'PATCH',
                     data: {
                         "_token"        : "{{ csrf_token() }}",
-                        id              : jQuery('#usertype_id_' + id).val(),
+                        id              : jQuery('#role_id_' + id).val(),
                         title_fa        : jQuery('#title_fa_' + id).val(),
                         title           : jQuery('#title_' + id).val(),
                         status          : jQuery('#status_' + id).val()
                     },
                     success: function (data) {
                         if(data.success == true){
-                            // بستن مدال
                             var modalId = '#editModal' + id;
-                            var modal = bootstrap.Modal.getInstance(document.querySelector(modalId)); // اینجا #myModal باید id مدال شما باشه
+                            var modal = bootstrap.Modal.getInstance(document.querySelector(modalId));
                             if (modal) modal.hide();
                             $('.yajra-datatable').DataTable().ajax.reload(null, false);
                             //swal(data.subject, data.message, data.flag);
-
                         } else {
                             swal(data.subject, data.message, data.flag);
                         }
@@ -244,7 +237,6 @@
                         swal('خطا', 'مشکلی پیش آمد. لطفاً دوباره تلاش کنید.', 'error');
                     },
                     complete: function () {
-                        // چه موفقیت چه خطا، دکمه رو برگردون
                         button.prop('disabled', false);
                         button.html(originalButtonHtml);
                     }
@@ -256,21 +248,16 @@
         jQuery(document).ready(function(){
             jQuery('[id^=deletesubmit_]').click(function(e){
                 e.preventDefault();
-
                 var button = jQuery(this);
                 var id = button.data('id');
-                var originalButtonHtml = button.html(); // متن اصلی دکمه رو ذخیره کن
-
-                // قفل کردن دکمه + گذاشتن اسپینر
+                var originalButtonHtml = button.html();
                 button.prop('disabled', true);
                 button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال حذف...');
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
-
                 jQuery.ajax({
                     url: "{{ route(request()->segment(2).'.destroy', 0) }}",
                     method: 'delete',
@@ -279,19 +266,15 @@
                         id: id,
                     },
                     success: function (data) {
-                        // مدال را ببند
                         var modalId = '#deleteModal' + id;
                         var modal = bootstrap.Modal.getInstance(document.querySelector(modalId));
                         modal.hide();
-
-                        // جدول را رفرش کن
                         $('.yajra-datatable').DataTable().ajax.reload(null, false);
                     },
                     error: function () {
                         alert('مشکلی پیش آمد. لطفاً دوباره تلاش کنید.');
                     },
                     complete: function () {
-                        // چه موفق باشه چه خطا بده، دکمه رو برگردون
                         button.prop('disabled', false);
                         button.html(originalButtonHtml);
                     }

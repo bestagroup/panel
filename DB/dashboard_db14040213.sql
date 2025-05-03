@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2025 at 12:07 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: May 03, 2025 at 05:20 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -1356,6 +1356,40 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menus`
+--
+
+CREATE TABLE `menus` (
+  `id` bigint(20) UNSIGNED NOT NULL COMMENT 'شناسه یکتا پنل منو',
+  `priority` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'شماره اولویت',
+  `title` varchar(255) DEFAULT NULL COMMENT 'عنوان صفحه',
+  `slug` varchar(255) DEFAULT NULL COMMENT 'آدرس صفحه',
+  `tab_title` varchar(255) DEFAULT NULL COMMENT 'عنوان صفحه در تب',
+  `page_title` varchar(255) DEFAULT NULL COMMENT 'عنوان صفحه در داخل صفحه',
+  `submenu` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'آیا زیرصفحه دارد؟',
+  `class` varchar(255) DEFAULT NULL COMMENT 'کلاس لاراول',
+  `controller` varchar(255) DEFAULT NULL COMMENT 'کنترلر مرتبط با صفحه',
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'وضعیت نمایش صفحه (فعال/غیرفعال)',
+  `home_show` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'وضعیت نمایش در صفحه اصلی (فعال/غیرفعال)',
+  `keyword` text DEFAULT NULL COMMENT 'کلمات کلیدی صفحه',
+  `description` text DEFAULT NULL COMMENT 'توضیحات صفحه',
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'شناسه کاربری ایجاد کننده',
+  `viewcount` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'شمارنده بازدید',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `priority`, `title`, `slug`, `tab_title`, `page_title`, `submenu`, `class`, `controller`, `status`, `home_show`, `keyword`, `description`, `user_id`, `viewcount`, `created_at`, `updated_at`) VALUES
+(2, NULL, 'صفحه اصلی', 'صفحه-اصلی', 'صفحه اصلی', 'صفحه اصلی', 0, 'index', 'IndexController', 4, 0, NULL, NULL, 1, 0, '2025-04-30 16:44:07', '2025-04-30 16:44:07'),
+(3, NULL, 'درباره ما', 'درباره-ما', 'درباره ما', 'درباره ما', 1, 'index', 'AboutController', 4, 1, NULL, NULL, 1, 0, '2025-04-30 16:59:36', '2025-04-30 16:59:36');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menu_panels`
 --
 
@@ -1381,11 +1415,12 @@ CREATE TABLE `menu_panels` (
 --
 
 INSERT INTO `menu_panels` (`id`, `priority`, `label`, `title`, `slug`, `icon`, `submenu`, `class`, `level`, `controller`, `status`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'مدیریت داشبورد', 'dashboard', 'dashboard', 'mdi-View-Dashboard-Outline', 1, 'index', NULL, 'IndexController', 4, 1, NULL, NULL),
-(2, 2, 'مدیریت کاربران', 'user-manager', 'user-manager', 'mdi-account-group', 1, 'index', NULL, 'IndexController', 4, 1, '2025-04-29 01:23:39', '2025-04-29 01:23:39'),
+(1, 1, 'مدیریت داشبورد', 'dashboard', 'dashboard', 'mdi-View-Dashboard-Outline', 1, 'index', NULL, 'IndexController', 4, 1, NULL, '2025-04-29 16:09:00'),
+(2, 2, 'مدیریت کاربران داشبورد', 'user-panel-manager', 'user-panel-manager', 'mdi-account-group', 1, 'index', NULL, 'IndexController', 4, 1, '2025-04-29 01:23:39', '2025-05-01 09:48:48'),
 (3, 3, 'مدیریت وبسایت', 'site-manager', 'site-manager', 'mdi mdi-web', 1, 'index', NULL, 'IndexController', 4, 1, '2025-04-29 01:24:33', '2025-04-29 01:26:20'),
-(4, 4, 'مدیریت فایل ها', 'file-manager', 'file-manager', 'mdi-folder-multiple-outline', 1, 'index', NULL, 'IndexController', 4, 1, '2025-04-29 01:25:41', '2025-04-29 01:26:04'),
-(5, 5, 'گزارش ها', 'reports', 'reports', 'mdi-chart-box-outline', 1, 'index', NULL, 'IndexController', 4, 1, '2025-04-29 01:25:14', '2025-04-29 01:25:14');
+(4, 4, 'مدیریت کاربران سایت', 'user-site-manager', 'user-site-manager', 'mdi-account-group', 1, 'index', NULL, 'IndexController', 4, 1, '2025-05-01 09:47:56', '2025-05-01 09:48:33'),
+(5, 5, 'مدیریت فایل ها', 'file-manager', 'file-manager', 'mdi-folder-multiple-outline', 1, 'index', NULL, 'IndexController', 4, 1, '2025-04-29 01:25:41', '2025-04-29 01:26:04'),
+(6, 6, 'گزارش ها', 'reports', 'reports', 'mdi-chart-box-outline', 1, 'index', NULL, 'IndexController', 4, 1, '2025-04-29 01:25:14', '2025-04-29 01:25:14');
 
 -- --------------------------------------------------------
 
@@ -1423,7 +1458,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2025_04_21_060909_activity_logs', 1),
 (18, '2025_04_21_061540_menu_panels', 1),
 (19, '2025_04_21_062001_submenu_panels', 1),
-(20, '2025_04_21_063007_submenu_permissions', 1);
+(20, '2025_04_21_063007_submenu_permissions', 1),
+(21, '2014_10_12_100000_create_password_resets_table', 2),
+(22, '2025_04_29_185400_menus', 2),
+(23, '2025_04_29_185406_submenus', 2);
 
 -- --------------------------------------------------------
 
@@ -1455,6 +1493,18 @@ CREATE TABLE `owners` (
 
 INSERT INTO `owners` (`id`, `title`, `tel`, `mobile`, `email`, `ceo`, `meli_code`, `eghtesadi_code`, `date_sabt`, `address`, `social`, `summery`, `user_id`, `created_at`, `updated_at`) VALUES
 (2, 'بستا', '02177116213', '09128119938', 'hosseindbk@gmail.com', 'محمد حسین دیوان بیگی', '14006200312', '14006200312', '1394/03/30', NULL, '[\"instagram:bestagroup\",\"linkedin:bestagroup\"]', 'تست توضیحات', 1, '2025-04-29 06:25:38', '2025-04-29 06:25:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1499,7 +1549,14 @@ INSERT INTO `permissions` (`id`, `title`, `label`, `slug`, `menu_panel_id`, `sub
 (23, 'menupanel', 'منو داشبورد', 'menupanel', NULL, 2, 1, '2025-04-29 02:49:03', '2025-04-29 02:49:03'),
 (24, 'submenupanel', 'زیرمنو داشبورد', 'submenupanel', NULL, 3, 1, '2025-04-29 02:49:57', '2025-04-29 02:49:57'),
 (25, 'leveluser', 'سطح کاربران', 'leveluser', NULL, 4, 1, '2025-04-29 02:51:12', '2025-04-29 02:51:12'),
-(26, 'owner', 'اطلاعات کارفرما', 'owner-2', NULL, 5, 1, '2025-04-29 05:01:43', '2025-04-29 05:01:43');
+(26, 'owner', 'اطلاعات کارفرما', 'owner-2', NULL, 5, 1, '2025-04-29 05:01:43', '2025-04-29 05:01:43'),
+(27, 'menusite', 'منو سایت', 'menusite', NULL, 7, 1, '2025-04-29 15:51:19', '2025-04-29 15:51:19'),
+(28, 'submenusite', 'زیرمنو سایت', 'submenusite', NULL, 8, 1, '2025-04-29 15:52:00', '2025-04-29 15:52:00'),
+(29, 'typeuser', 'انواع کاربران', 'typeuser', NULL, 9, 1, '2025-04-30 17:34:55', '2025-04-30 17:34:55'),
+(30, 'roleuser', 'انواع نقش کاربران داشبورد', 'roleuser', NULL, 10, 1, '2025-05-01 09:42:22', '2025-05-01 09:42:22'),
+(31, 'siteuser', 'مدیریت کاربران سایت', 'siteuser', 22, NULL, 1, '2025-05-01 09:47:56', '2025-05-01 09:47:56'),
+(32, 'site_user_list', 'لیست کاربران سایت', 'site-user-list', NULL, 11, 1, '2025-05-01 09:58:01', '2025-05-01 09:58:01'),
+(33, 'paneluser', 'لیست کاربران داشبورد', 'paneluser', NULL, 12, 1, '2025-05-02 06:51:27', '2025-05-02 06:51:27');
 
 -- --------------------------------------------------------
 
@@ -1542,12 +1599,24 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL COMMENT 'شناسه یکتا نقش',
-  `title` varchar(255) DEFAULT NULL COMMENT 'عنوان نقش مانند مدیر، کاربر، ناظر',
-  `slug` varchar(255) DEFAULT NULL COMMENT 'نام انگلیسی یا کد یکتا نقش برای استفاده در سیستم',
+  `title_fa` varchar(255) DEFAULT NULL COMMENT 'عنوان نقش مانند مدیر، کاربر، ناظر',
+  `title` varchar(255) DEFAULT NULL COMMENT 'نام انگلیسی یا کد یکتا نقش برای استفاده در سیستم',
   `user_id` bigint(20) UNSIGNED NOT NULL COMMENT 'شناسه کاربری که این نقش را ایجاد کرده',
+  `status` int(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `title_fa`, `title`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'ادمین', 'supperadmin', 1, NULL, NULL, NULL),
+(2, 'مدیر ارشد', 'chief', 1, 4, NULL, '2025-05-02 09:31:29'),
+(3, 'مدیر', 'manager', 1, 4, NULL, '2025-05-02 09:31:33'),
+(4, 'کارشناس ارشد', 'seniorexpert', 1, 4, NULL, '2025-05-02 09:31:25'),
+(5, 'کارمند', 'emploee', 1, 4, NULL, '2025-05-02 09:31:19');
 
 -- --------------------------------------------------------
 
@@ -1614,6 +1683,38 @@ INSERT INTO `states` (`id`, `title`, `status`, `lat`, `lng`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `submenus`
+--
+
+CREATE TABLE `submenus` (
+  `id` bigint(20) UNSIGNED NOT NULL COMMENT 'شناسه یکتا زیرصفحه',
+  `priority` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'شماره اولویت',
+  `title` varchar(255) DEFAULT NULL COMMENT 'عنوان زیرصفحه',
+  `menu_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'شناسه منو اصلی که این زیرصفحه به آن تعلق دارد',
+  `slug` varchar(255) DEFAULT NULL COMMENT 'آدرس زیرصفحه',
+  `class` varchar(255) DEFAULT NULL COMMENT 'کلاس لاراول',
+  `controller` varchar(255) DEFAULT NULL COMMENT 'کنترلر مرتبط با زیرصفحه',
+  `tab_title` varchar(255) DEFAULT NULL COMMENT 'کنترلر مرتبط با زیرصفحه',
+  `page_title` varchar(255) DEFAULT NULL COMMENT 'کنترلر مرتبط با زیرصفحه',
+  `keyword` text DEFAULT NULL COMMENT 'کنترلر مرتبط با زیرصفحه',
+  `description` text DEFAULT NULL COMMENT 'کنترلر مرتبط با زیرصفحه',
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'وضعیت زیرصفحه (فعال/غیرفعال)',
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'شناسه کاربری که این نقش را ایجاد کرده',
+  `viewcount` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'شمارنده بازدید',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `submenus`
+--
+
+INSERT INTO `submenus` (`id`, `priority`, `title`, `menu_id`, `slug`, `class`, `controller`, `tab_title`, `page_title`, `keyword`, `description`, `status`, `user_id`, `viewcount`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'تیم ما', 3, 'تیم-ما', 'index', 'teamController', 'تیم ما', 'تیم ما', NULL, NULL, 4, 1, 0, '2025-04-30 17:00:20', '2025-04-30 17:10:24');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `submenu_panels`
 --
 
@@ -1641,7 +1742,13 @@ INSERT INTO `submenu_panels` (`id`, `priority`, `title`, `label`, `menu_id`, `sl
 (1, 1, 'owner', 'اطلاعات کارفرما', 1, 'owner', NULL, 'index', 'OwnerController', 4, 1, '2025-04-29 05:01:43', '2025-04-29 05:01:43'),
 (2, 2, 'menupanel', 'منو', 1, 'menupanel', NULL, 'index', 'MenupanelController', 4, 1, NULL, '2025-04-29 05:00:58'),
 (3, 3, 'submenupanel', 'زیرمنو', 1, 'submenupanel', NULL, 'index', 'SubmenupanelConttroller', 4, 1, NULL, '2025-04-29 05:01:05'),
-(4, 4, 'leveluser', 'سطح کاربران', 2, 'leveluser', NULL, 'index', 'LeveluserController', 4, 1, '2025-04-29 02:51:12', '2025-04-29 02:51:12');
+(4, 4, 'leveluser', 'سطح کاربران', 2, 'leveluser', NULL, 'index', 'LeveluserController', 4, 1, '2025-04-29 02:51:12', '2025-04-29 02:51:12'),
+(7, 5, 'menusite', 'منو سایت', 3, 'menusite', NULL, 'index', 'MenusiteController', 4, 1, '2025-04-29 15:51:19', '2025-04-29 15:51:19'),
+(8, 6, 'submenusite', 'زیرمنو سایت', 3, 'submenusite', NULL, 'index', 'SubmenusiteController', 4, 1, '2025-04-29 15:52:00', '2025-04-29 16:11:26'),
+(9, 7, 'typeuser', 'نقش کاربران سایت', 4, 'typeuser', NULL, 'index', 'TypeuserController', 4, 1, '2025-04-30 17:34:55', '2025-05-01 09:52:29'),
+(10, 8, 'roleuser', 'نقش کاربران داشبورد', 2, 'roleuser', NULL, 'index', 'RoleController', 4, 1, '2025-05-01 09:42:22', '2025-05-01 09:52:22'),
+(11, 9, 'siteuser', 'لیست کاربران سایت', 4, 'siteuser', NULL, 'index', 'SiteuserController', 4, 1, '2025-05-01 09:58:01', '2025-05-01 09:58:18'),
+(12, NULL, 'paneluser', 'لیست کاربران داشبورد', 2, 'paneluser', NULL, 'index', 'PaneluserController', 4, 1, '2025-05-02 06:51:27', '2025-05-02 06:51:27');
 
 -- --------------------------------------------------------
 
@@ -1670,6 +1777,7 @@ CREATE TABLE `type_users` (
   `id` bigint(20) UNSIGNED NOT NULL COMMENT 'شناسه یکتا نوع کاربر',
   `title` varchar(255) NOT NULL COMMENT 'عنوان نوع کاربر به انگلیسی ',
   `title_fa` varchar(255) DEFAULT NULL COMMENT 'عنوان نوع کاربر به فارسی یا نمایش در UI',
+  `status` int(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1678,8 +1786,14 @@ CREATE TABLE `type_users` (
 -- Dumping data for table `type_users`
 --
 
-INSERT INTO `type_users` (`id`, `title`, `title_fa`, `created_at`, `updated_at`) VALUES
-(1, 'superadmin', 'کاربر اصلی', '2025-04-27 08:31:02', '2025-04-27 08:31:02');
+INSERT INTO `type_users` (`id`, `title`, `title_fa`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'superadmin', 'کاربر اصلی', NULL, '2025-04-27 08:31:02', '2025-04-27 08:31:02'),
+(2, 'Chief', 'مدیر ارشد', 4, '2025-04-30 17:37:12', '2025-04-30 17:37:12'),
+(3, 'manager', 'مدیر', 4, '2025-04-30 17:37:25', '2025-04-30 17:37:25'),
+(4, 'master', 'کارشناس ارشد', 4, '2025-04-30 17:38:03', '2025-04-30 17:38:03'),
+(5, 'expert', 'کارشناس', 4, '2025-04-30 17:38:31', '2025-04-30 17:38:31'),
+(6, 'employee', 'کارمند', 4, '2025-04-30 17:39:05', '2025-04-30 17:41:31'),
+(8, 'customer', 'مشتری دائم', 4, '2025-05-02 09:25:17', '2025-05-02 09:25:17');
 
 -- --------------------------------------------------------
 
@@ -1737,7 +1851,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verify`, `email_verified_at`, `level`, `api_token`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `image`, `phone`, `phone_verify`, `telphone`, `national_id`, `user_job`, `marital_status`, `type_id`, `state_id`, `city_id`, `birthday`, `gender`, `age`, `originality`, `postalcode`, `father_name`, `birth_certificate`, `job_title`, `education_id`, `folder_id`, `folder_validity`, `folder_base`, `place_id`, `address`, `social`, `bio`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'محمد حسین دیوان بیگی', NULL, 'hosseindbk@gmail.com', 0, NULL, 'admin', NULL, '$2y$12$V18ExqGEw5ZOov9XoGI7EecN5mN.PvXla3mr/F/V4dqRX4kNpQNY.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-04-27 08:31:03', '2025-04-27 08:31:03');
+(1, 'محمد حسین دیوان بیگی', NULL, 'hosseindbk@gmail.com', 0, NULL, 'admin', NULL, '$2y$12$V18ExqGEw5ZOov9XoGI7EecN5mN.PvXla3mr/F/V4dqRX4kNpQNY.', NULL, NULL, NULL, NULL, '09128119938', NULL, NULL, '2980417262', NULL, NULL, 1, NULL, NULL, '1371/03/02', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, '2025-04-27 08:31:03', '2025-05-02 04:22:21');
 
 -- --------------------------------------------------------
 
@@ -1798,6 +1912,13 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `menus_user_id_foreign` (`user_id`);
+
+--
 -- Indexes for table `menu_panels`
 --
 ALTER TABLE `menu_panels`
@@ -1816,6 +1937,12 @@ ALTER TABLE `migrations`
 ALTER TABLE `owners`
   ADD PRIMARY KEY (`id`),
   ADD KEY `owners_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Indexes for table `password_reset_tokens`
@@ -1865,6 +1992,14 @@ ALTER TABLE `role_user`
 --
 ALTER TABLE `states`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `submenus`
+--
+ALTER TABLE `submenus`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `submenus_menu_id_foreign` (`menu_id`),
+  ADD KEY `submenus_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `submenu_panels`
@@ -1938,16 +2073,22 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `menus`
+--
+ALTER TABLE `menus`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا پنل منو', AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `menu_panels`
 --
 ALTER TABLE `menu_panels`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا پنل منو', AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا پنل منو', AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `owners`
@@ -1959,7 +2100,7 @@ ALTER TABLE `owners`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا سطح دسترسی', AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا سطح دسترسی', AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `permission_role`
@@ -1977,7 +2118,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا نقش';
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا نقش', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `states`
@@ -1986,10 +2127,16 @@ ALTER TABLE `states`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا', AUTO_INCREMENT=32;
 
 --
+-- AUTO_INCREMENT for table `submenus`
+--
+ALTER TABLE `submenus`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا زیرصفحه', AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `submenu_panels`
 --
 ALTER TABLE `submenu_panels`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا پنل زیرمنو', AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا پنل زیرمنو', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `submenu_permissions`
@@ -2001,7 +2148,7 @@ ALTER TABLE `submenu_permissions`
 -- AUTO_INCREMENT for table `type_users`
 --
 ALTER TABLE `type_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا نوع کاربر', AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'شناسه یکتا نوع کاربر', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -2044,6 +2191,12 @@ ALTER TABLE `comments`
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `menus`
+--
+ALTER TABLE `menus`
+  ADD CONSTRAINT `menus_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `menu_panels`
 --
 ALTER TABLE `menu_panels`
@@ -2080,6 +2233,13 @@ ALTER TABLE `roles`
 ALTER TABLE `role_user`
   ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `submenus`
+--
+ALTER TABLE `submenus`
+  ADD CONSTRAINT `submenus_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `submenus_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `submenu_panels`

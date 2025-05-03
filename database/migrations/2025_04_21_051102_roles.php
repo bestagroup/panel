@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id()->comment('شناسه یکتا نقش');
-            $table->string('title')->nullable()->comment('عنوان نقش مانند مدیر، کاربر، ناظر');
-            $table->string('slug')->nullable()->comment('نام انگلیسی یا کد یکتا نقش برای استفاده در سیستم');
+            $table->string('title_fa')->nullable()->comment('عنوان نقش مانند مدیر، کاربر، ناظر');
+            $table->string('title')->nullable()->comment('نام انگلیسی یا کد یکتا نقش برای استفاده در سیستم');
+            $table->boolean('status')->nullable()->comment('وضعیت فعال = 4 و غیر فعال = 0');
             $table->unsignedBigInteger('user_id')->comment('شناسه کاربری که این نقش را ایجاد کرده');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps(); // created_at و updated_at
